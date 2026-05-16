@@ -11,11 +11,6 @@ out/
 
 # IDE / Eclipse / OMNeT++
 .metadata/
-.settings/
-.cproject
-.project
-.nedexclusions
-.oppbuildspec
 
 # simulation temporary files
 simulations/results/
