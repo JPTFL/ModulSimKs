@@ -11,6 +11,7 @@ out/
 
 # IDE / Eclipse / OMNeT++
 .metadata/
+omnet_tictoc/.settings/language.settings.xml
 
 # simulation temporary files
 simulations/results/

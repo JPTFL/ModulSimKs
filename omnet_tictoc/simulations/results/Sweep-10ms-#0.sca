@@ -1,22 +1,23 @@
 version 3
-run Delay10ms-0-20260516-17:54:06-5753
-attr configname Delay10ms
-attr datetime 20260516-17:54:06
-attr datetimef 20260516-175406
-attr experiment Delay10ms
+run Sweep-0-20260516-17:59:06-6777
+attr configname Sweep
+attr datetime 20260516-17:59:06
+attr datetimef 20260516-175906
+attr experiment Sweep
 attr inifile omnetpp.ini
-attr iterationvars ""
-attr iterationvarsd ""
-attr iterationvarsf ""
-attr measurement ""
+attr iterationvars $0=10ms
+attr iterationvarsd 10ms
+attr iterationvarsf 10ms-
+attr measurement $0=10ms
 attr network omnet_tictoc.Tictoc1
-attr processid 5753
+attr processid 6777
 attr repetition 0
 attr replication #0
 attr resultdir results
 attr runnumber 0
 attr seedset 0
 config network omnet_tictoc.Tictoc1
+config sim-time-limit 2s
 config **.linkDelay 10ms
 
 par Tictoc1.tic.out.channel typename "\"ned.DelayChannel\""

@@ -16,7 +16,7 @@ network Tictoc1
             @display("p=160,141");
         }
     connections:
-        tic.out --> {  delay = 100ms; } --> relay.in;
-        relay.out --> {  delay = 100ms; } --> toc.in;
-        toc.out --> {  delay = 100ms; } --> tic.in;
+        tic.out --> {  delay = parent.linkDelay; } --> relay.in;
+        relay.out --> {  delay = parent.linkDelay; } --> toc.in;
+        toc.out --> {  delay = parent.linkDelay; } --> tic.in;
 }

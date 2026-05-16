@@ -1,49 +1,50 @@
 version 3
-run Delay10ms-0-20260516-17:54:06-5753
-attr configname Delay10ms
-attr datetime 20260516-17:54:06
-attr datetimef 20260516-175406
-attr experiment Delay10ms
+run Sweep-1-20260516-17:59:25-6945
+attr configname Sweep
+attr datetime 20260516-17:59:25
+attr datetimef 20260516-175925
+attr experiment Sweep
 attr inifile omnetpp.ini
-attr iterationvars ""
-attr iterationvarsd ""
-attr iterationvarsf ""
-attr measurement ""
+attr iterationvars $0=100ms
+attr iterationvarsd 100ms
+attr iterationvarsf 100ms-
+attr measurement $0=100ms
 attr network omnet_tictoc.Tictoc1
-attr processid 5753
+attr processid 6945
 attr repetition 0
 attr replication #0
 attr resultdir results
-attr runnumber 0
-attr seedset 0
+attr runnumber 1
+attr seedset 1
 config network omnet_tictoc.Tictoc1
-config **.linkDelay 10ms
+config sim-time-limit 2s
+config **.linkDelay 100ms
 
 par Tictoc1.tic.out.channel typename "\"ned.DelayChannel\""
 par Tictoc1.tic.out.channel disabled false
 attr mutable ""
-par Tictoc1.tic.out.channel delay 0.01s
+par Tictoc1.tic.out.channel delay 0.1s
 attr mutable ""
 attr unit s
 par Tictoc1.relay.out.channel typename "\"ned.DelayChannel\""
 par Tictoc1.relay.out.channel disabled false
 attr mutable ""
-par Tictoc1.relay.out.channel delay 0.01s
+par Tictoc1.relay.out.channel delay 0.1s
 attr mutable ""
 attr unit s
 par Tictoc1.toc.out.channel typename "\"ned.DelayChannel\""
 par Tictoc1.toc.out.channel disabled false
 attr mutable ""
-par Tictoc1.toc.out.channel delay 0.01s
+par Tictoc1.toc.out.channel delay 0.1s
 attr mutable ""
 attr unit s
 par Tictoc1.tic typename "\"omnet_tictoc.Txc1\""
-scalar Tictoc1.tic forwardCount 19
+scalar Tictoc1.tic forwardCount 6
 par Tictoc1.toc typename "\"omnet_tictoc.Txc1\""
-scalar Tictoc1.toc forwardCount 19
+scalar Tictoc1.toc forwardCount 7
 par Tictoc1.relay typename "\"omnet_tictoc.Txc1\""
-scalar Tictoc1.relay forwardCount 20
+scalar Tictoc1.relay forwardCount 7
 par Tictoc1 typename "\"omnet_tictoc.Tictoc1\""
-par Tictoc1 linkDelay 0.01s
+par Tictoc1 linkDelay 0.1s
 attr unit s
 

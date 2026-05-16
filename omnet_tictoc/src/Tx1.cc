@@ -9,6 +9,7 @@ public:
 protected:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg) override;
+    virtual void finish() override;
 };
 
 Define_Module(Txc1);
@@ -30,4 +31,9 @@ void Txc1::handleMessage(cMessage *msg) {
     } else {
         send(msg, "out");
     }
+}
+
+void Txc1::finish()
+{
+recordScalar("forwardCount", forwardCount);
 }
