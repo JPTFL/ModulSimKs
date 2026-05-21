@@ -1,0 +1,6084 @@
+version 3
+run C2-0-20260521-10:30:42-24956
+attr configname C2
+attr datetime 20260521-10:30:42
+attr datetimef 20260521-103042
+attr experiment C2
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network omnet_tictoc.Network
+attr processid 24956
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config image-path ../../../inet-4.6.0/images
+config extends C1
+config *.hostA.app[0].sendInterval 200ms
+config network omnet_tictoc.Network
+config sim-time-limit 10s
+config *.host*.ipv4.arp.typename GlobalArp
+config *.hostA.mobility.typename StationaryMobility
+config *.hostB.mobility.typename StationaryMobility
+config *.hostA.mobility.initialX 0m
+config *.hostA.mobility.initialY 0m
+config *.hostB.mobility.initialX 100m
+config *.hostB.mobility.initialY 0m
+config *.host*.wlan[0].radio.transmitter.communicationRange 200m
+config *.host*.wlan[0].radio.receiver.ignoreInterference true
+config *.host*.wlan[0].mgmt.typename Ieee80211MgmtAdhoc
+config *.host*.wlan[0].agent.typename ""
+config *.hostA.numApps 1
+config *.hostA.app[0].typename UdpBasicApp
+config *.hostA.app[0].destAddresses "\"hostB\""
+config *.hostA.app[0].destPort 5000
+config *.hostA.app[0].messageLength 200B
+config *.hostA.app[0].sendInterval 50ms
+config *.hostB.numApps 1
+config *.hostB.app[0].typename UdpSink
+config *.hostB.app[0].localPort 5000
+config *.configurator.assignAddresses true
+config *.configurator.addStaticRoutes false
+
+vector 0 Network.hostA.lo[0].lo rcvdPkFromHl:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, packetBytes"
+vector 1 Network.hostA.lo[0].lo passedUpPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToUpper
+attr title "packets passed to higher layer, packetBytes"
+vector 2 Network.hostA.lo[0] packetDropInterfaceDown:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, packetBytes"
+vector 3 Network.hostA.lo[0] packetDropNoCarrier:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, packetBytes"
+vector 4 Network.hostA.wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 5 Network.hostA.wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 6 Network.hostA.wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 7 Network.hostA.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 8 Network.hostA.wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 9 Network.hostA.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 10 Network.hostA.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 11 Network.hostA.wlan[0].mac.dcf.channelAccess.pendingQueue droppedPacketLengthsQueueOverflow:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetDropReasonIsQueueOverflow(packetDropped))
+attr title "dropped packet lengths: queue overflow"
+attr unit b
+vector 12 Network.hostA.wlan[0].mac.dcf.channelAccess.pendingQueue flowQueueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(demuxFlow(packetPulled))
+attr title "flow queueing times"
+attr unit s
+vector 13 Network.hostA.wlan[0].mac.dcf.channelAccess.pendingQueue flowIncomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(flowPacketLength(demuxFlow(packetPushStarted)))
+attr title "flow specific incoming data rate"
+attr unit bps
+vector 14 Network.hostA.wlan[0].mac.dcf.channelAccess.pendingQueue flowOutgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(flowPacketLength(demuxFlow(packetPulled)))
+attr title "flow specific outgoing data rate"
+attr unit bps
+vector 15 Network.hostA.wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetDequeued)
+attr title "queueing times"
+vector 16 Network.hostA.wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 17 Network.hostA.wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "backoff periods"
+vector 18 Network.hostA.wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 19 Network.hostA.wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 20 Network.hostA.wlan[0].mac.dcf.recipientMacDataService packetDropDuplicateDetected:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, packetBytes"
+vector 21 Network.hostA.wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 22 Network.hostA.wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent, packetBytes"
+vector 23 Network.hostA.wlan[0].mac.dcf packetSentToPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetSentToPeer)
+attr title "packets sent: unicast, packetBytes"
+vector 24 Network.hostA.wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetSentToPeer)
+attr title "packets sent: multicast, packetBytes"
+vector 25 Network.hostA.wlan[0].mac.dcf packetSentToPeerBroadcast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Broadcast(packetSentToPeer)
+attr title "packets sent: broadcast , packetBytes"
+vector 26 Network.hostA.wlan[0].mac.dcf packetSentToPeerWithRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Retry(packetSentToPeer)
+attr title "packets sent: with retry, packetBytes"
+vector 27 Network.hostA.wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetSentToPeer)
+attr title "packets sent: without retry, packetBytes"
+vector 28 Network.hostA.wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received, packetBytes"
+vector 29 Network.hostA.wlan[0].mac.dcf packetReceivedFromPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetReceivedFromPeer)
+attr title "packets received: unicast, packetBytes"
+vector 30 Network.hostA.wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetReceivedFromPeer)
+attr title "packets received: multicast, packetBytes"
+vector 31 Network.hostA.wlan[0].mac.dcf packetReceivedFromPeerBroadcast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Broadcast(packetReceivedFromPeer)
+attr title "packets received: broadcast, packetBytes"
+vector 32 Network.hostA.wlan[0].mac.dcf packetReceivedFromPeerWithRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Retry(packetReceivedFromPeer)
+attr title "packets received: with retry, packetBytes"
+vector 33 Network.hostA.wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetReceivedFromPeer)
+attr title "packets received: without retry, packetBytes"
+vector 34 Network.hostA.wlan[0].mac.dcf packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+vector 35 Network.hostA.wlan[0].mac.dcf packetDropNotAddressedToUs:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, packetBytes"
+vector 36 Network.hostA.wlan[0].mac.dcf packetDropQueueOverflow:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, packetBytes"
+vector 37 Network.hostA.wlan[0].mac.dcf packetDropRetryLimitReached:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, packetBytes"
+vector 38 Network.hostA.wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 39 Network.hostA.wlan[0].mac.dcf datarateSelected:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "datarates selected"
+vector 40 Network.hostA.wlan[0].mac.rx nav:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source navChanged
+attr title "network allocation vector"
+vector 41 Network.hostA.wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to upper layer, packetBytes"
+vector 42 Network.hostA.wlan[0].mac packetSentToLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to lower layer, packetBytes"
+vector 43 Network.hostA.wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from upper layer, packetBytes"
+vector 44 Network.hostA.wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from lower layer, packetBytes"
+vector 45 Network.hostA.wlan[0].mac packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+vector 46 Network.hostA.wlan[0].mac packetDropIncorrectlyReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packet drops: incorrectly received, packetBytes"
+vector 47 Network.hostA.wlan[0].mac packetDropNotAddressedToUs:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, packetBytes"
+vector 48 Network.hostA.wlan[0].mac packetDropQueueOverflow:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, packetBytes"
+vector 49 Network.hostA.wlan[0].mac packetDropRetryLimitReached:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, packetBytes"
+vector 50 Network.hostA.wlan[0].mac packetDropDuplicateDetected:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, packetBytes"
+vector 51 Network.hostA.wlan[0].mac packetDropOther:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsOther(packetDropped)
+attr title "packet drops: other, packetBytes"
+vector 52 Network.hostA.wlan[0].radio radioMode:vector ETV
+attr enum OFF,SLEEP,RECEIVER,TRANSMITTER,TRANSCEIVER,SWITCHING
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+attr type enum
+vector 53 Network.hostA.wlan[0].radio receptionState:vector ETV
+attr enum UNDEFINED,IDLE,BUSY,RECEIVING
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+attr type enum
+vector 54 Network.hostA.wlan[0].radio transmissionState:vector ETV
+attr enum UNDEFINED,IDLE,TRANSMITTING
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "Radio transmission state"
+attr type enum
+vector 55 Network.hostA.wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 56 Network.hostA.wlan[0] packetDropInterfaceDown:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, packetBytes"
+vector 57 Network.hostA.wlan[0] packetDropNoCarrier:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, packetBytes"
+vector 58 Network.hostA.ipv4.ip packetDropAddressResolutionFailed:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsAddressResolutionFailed(packetDropped)
+attr title "packet drop: address resolution failed, packetBytes"
+vector 59 Network.hostA.ipv4.ip packetDropHopLimitReached:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsHopLimitReached(packetDropped)
+attr title "packet drop: hop limit reached, packetBytes"
+vector 60 Network.hostA.ipv4.ip packetDropForwardingDisabled:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsForwardingDisabled(packetDropped)
+attr title "packet drop: forwarding disabled, packetBytes"
+vector 61 Network.hostA.ipv4.ip packetDropLifetimeExpired:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsLifetimeExpired(packetDropped)
+attr title "packet drop: lifetime expired, packetBytes"
+vector 62 Network.hostA.ipv4.ip packetDropNoInterfaceFound:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNoInterfaceFound(packetDropped)
+attr title "packet drop: no interface found, packetBytes"
+vector 63 Network.hostA.ipv4.ip packetDropNoRouteFound:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNoRouteFound(packetDropped)
+attr title "packet drop: no route found, packetBytes"
+vector 64 Network.hostA.ipv4.ip packetDropUndefined:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsUndefined(packetDropped)
+attr title "packet drop: undefined, packetBytes"
+vector 65 Network.hostA.udp packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 66 Network.hostA.udp outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetSent)
+attr title "outgoing datarate"
+attr unit bps
+vector 67 Network.hostA.udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 68 Network.hostA.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 69 Network.hostA.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 70 Network.hostA.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 71 Network.hostA.app[0] packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 72 Network.hostA.app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 73 Network.hostA.app[0] packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 74 Network.hostA.app[0] rcvdPkLifetime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source dataAge(packetReceived)
+attr title "received packet lifetime"
+attr unit s
+vector 75 Network.hostA.app[0] rcvdPkSeqNo:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source appPkSeqNo(packetReceived)
+attr title "received packet sequence number"
+vector 76 Network.hostB.lo[0].lo rcvdPkFromHl:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, packetBytes"
+vector 77 Network.hostB.lo[0].lo passedUpPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToUpper
+attr title "packets passed to higher layer, packetBytes"
+vector 78 Network.hostB.lo[0] packetDropInterfaceDown:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, packetBytes"
+vector 79 Network.hostB.lo[0] packetDropNoCarrier:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, packetBytes"
+vector 80 Network.hostB.wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 81 Network.hostB.wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 82 Network.hostB.wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 83 Network.hostB.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 84 Network.hostB.wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 85 Network.hostB.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 86 Network.hostB.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 87 Network.hostB.wlan[0].mac.dcf.channelAccess.pendingQueue droppedPacketLengthsQueueOverflow:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetDropReasonIsQueueOverflow(packetDropped))
+attr title "dropped packet lengths: queue overflow"
+attr unit b
+vector 88 Network.hostB.wlan[0].mac.dcf.channelAccess.pendingQueue flowQueueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(demuxFlow(packetPulled))
+attr title "flow queueing times"
+attr unit s
+vector 89 Network.hostB.wlan[0].mac.dcf.channelAccess.pendingQueue flowIncomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(flowPacketLength(demuxFlow(packetPushStarted)))
+attr title "flow specific incoming data rate"
+attr unit bps
+vector 90 Network.hostB.wlan[0].mac.dcf.channelAccess.pendingQueue flowOutgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(flowPacketLength(demuxFlow(packetPulled)))
+attr title "flow specific outgoing data rate"
+attr unit bps
+vector 91 Network.hostB.wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetDequeued)
+attr title "queueing times"
+vector 92 Network.hostB.wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 93 Network.hostB.wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "backoff periods"
+vector 94 Network.hostB.wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 95 Network.hostB.wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 96 Network.hostB.wlan[0].mac.dcf.recipientMacDataService packetDropDuplicateDetected:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, packetBytes"
+vector 97 Network.hostB.wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 98 Network.hostB.wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent, packetBytes"
+vector 99 Network.hostB.wlan[0].mac.dcf packetSentToPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetSentToPeer)
+attr title "packets sent: unicast, packetBytes"
+vector 100 Network.hostB.wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetSentToPeer)
+attr title "packets sent: multicast, packetBytes"
+vector 101 Network.hostB.wlan[0].mac.dcf packetSentToPeerBroadcast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Broadcast(packetSentToPeer)
+attr title "packets sent: broadcast , packetBytes"
+vector 102 Network.hostB.wlan[0].mac.dcf packetSentToPeerWithRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Retry(packetSentToPeer)
+attr title "packets sent: with retry, packetBytes"
+vector 103 Network.hostB.wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetSentToPeer)
+attr title "packets sent: without retry, packetBytes"
+vector 104 Network.hostB.wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received, packetBytes"
+vector 105 Network.hostB.wlan[0].mac.dcf packetReceivedFromPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetReceivedFromPeer)
+attr title "packets received: unicast, packetBytes"
+vector 106 Network.hostB.wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetReceivedFromPeer)
+attr title "packets received: multicast, packetBytes"
+vector 107 Network.hostB.wlan[0].mac.dcf packetReceivedFromPeerBroadcast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Broadcast(packetReceivedFromPeer)
+attr title "packets received: broadcast, packetBytes"
+vector 108 Network.hostB.wlan[0].mac.dcf packetReceivedFromPeerWithRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Retry(packetReceivedFromPeer)
+attr title "packets received: with retry, packetBytes"
+vector 109 Network.hostB.wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetReceivedFromPeer)
+attr title "packets received: without retry, packetBytes"
+vector 110 Network.hostB.wlan[0].mac.dcf packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+vector 111 Network.hostB.wlan[0].mac.dcf packetDropNotAddressedToUs:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, packetBytes"
+vector 112 Network.hostB.wlan[0].mac.dcf packetDropQueueOverflow:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, packetBytes"
+vector 113 Network.hostB.wlan[0].mac.dcf packetDropRetryLimitReached:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, packetBytes"
+vector 114 Network.hostB.wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 115 Network.hostB.wlan[0].mac.dcf datarateSelected:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "datarates selected"
+vector 116 Network.hostB.wlan[0].mac.rx nav:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source navChanged
+attr title "network allocation vector"
+vector 117 Network.hostB.wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to upper layer, packetBytes"
+vector 118 Network.hostB.wlan[0].mac packetSentToLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to lower layer, packetBytes"
+vector 119 Network.hostB.wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from upper layer, packetBytes"
+vector 120 Network.hostB.wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from lower layer, packetBytes"
+vector 121 Network.hostB.wlan[0].mac packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+vector 122 Network.hostB.wlan[0].mac packetDropIncorrectlyReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packet drops: incorrectly received, packetBytes"
+vector 123 Network.hostB.wlan[0].mac packetDropNotAddressedToUs:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, packetBytes"
+vector 124 Network.hostB.wlan[0].mac packetDropQueueOverflow:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, packetBytes"
+vector 125 Network.hostB.wlan[0].mac packetDropRetryLimitReached:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, packetBytes"
+vector 126 Network.hostB.wlan[0].mac packetDropDuplicateDetected:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, packetBytes"
+vector 127 Network.hostB.wlan[0].mac packetDropOther:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsOther(packetDropped)
+attr title "packet drops: other, packetBytes"
+vector 128 Network.hostB.wlan[0].radio radioMode:vector ETV
+attr enum OFF,SLEEP,RECEIVER,TRANSMITTER,TRANSCEIVER,SWITCHING
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+attr type enum
+vector 129 Network.hostB.wlan[0].radio receptionState:vector ETV
+attr enum UNDEFINED,IDLE,BUSY,RECEIVING
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+attr type enum
+vector 130 Network.hostB.wlan[0].radio transmissionState:vector ETV
+attr enum UNDEFINED,IDLE,TRANSMITTING
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "Radio transmission state"
+attr type enum
+vector 131 Network.hostB.wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 132 Network.hostB.wlan[0] packetDropInterfaceDown:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, packetBytes"
+vector 133 Network.hostB.wlan[0] packetDropNoCarrier:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, packetBytes"
+vector 134 Network.hostB.ipv4.ip packetDropAddressResolutionFailed:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsAddressResolutionFailed(packetDropped)
+attr title "packet drop: address resolution failed, packetBytes"
+vector 135 Network.hostB.ipv4.ip packetDropHopLimitReached:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsHopLimitReached(packetDropped)
+attr title "packet drop: hop limit reached, packetBytes"
+vector 136 Network.hostB.ipv4.ip packetDropForwardingDisabled:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsForwardingDisabled(packetDropped)
+attr title "packet drop: forwarding disabled, packetBytes"
+vector 137 Network.hostB.ipv4.ip packetDropLifetimeExpired:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsLifetimeExpired(packetDropped)
+attr title "packet drop: lifetime expired, packetBytes"
+vector 138 Network.hostB.ipv4.ip packetDropNoInterfaceFound:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNoInterfaceFound(packetDropped)
+attr title "packet drop: no interface found, packetBytes"
+vector 139 Network.hostB.ipv4.ip packetDropNoRouteFound:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNoRouteFound(packetDropped)
+attr title "packet drop: no route found, packetBytes"
+vector 140 Network.hostB.ipv4.ip packetDropUndefined:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsUndefined(packetDropped)
+attr title "packet drop: undefined, packetBytes"
+vector 141 Network.hostB.udp packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 142 Network.hostB.udp outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetSent)
+attr title "outgoing datarate"
+attr unit bps
+vector 143 Network.hostB.udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 144 Network.hostB.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 145 Network.hostB.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 146 Network.hostB.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 147 Network.hostB.app[0] packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 148 Network.hostB.app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 149 Network.hostB.app[0] endToEndDelay:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source dataAge(packetReceived)
+attr title "end-to-end delay"
+attr unit s
+vector 150 Network.hostB.app[0] rcvdPkSeqNo:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source appPkSeqNo(packetReceived)
+attr title "received packet sequence number"
+4	0	0	0
+4	0	0	0
+4	0	0	0
+4	0	0	0
+4	0	0	0
+4	9	0.2	1
+4	11	0.2	0
+4	38	0.4	1
+4	40	0.4	0
+4	67	0.6	1
+4	69	0.6	0
+4	96	0.8	1
+4	98	0.8	0
+4	125	1	1
+4	127	1	0
+4	154	1.2	1
+4	156	1.2	0
+4	183	1.4	1
+4	185	1.4	0
+4	212	1.6	1
+4	214	1.6	0
+4	241	1.8	1
+4	243	1.8	0
+4	270	2	1
+4	272	2	0
+4	299	2.2	1
+4	301	2.2	0
+4	328	2.4	1
+4	330	2.4	0
+4	357	2.6	1
+4	359	2.6	0
+4	386	2.8	1
+4	388	2.8	0
+4	415	3	1
+4	417	3	0
+4	444	3.2	1
+4	446	3.2	0
+4	473	3.4	1
+4	475	3.4	0
+4	502	3.6	1
+4	504	3.6	0
+4	531	3.8	1
+4	533	3.8	0
+4	560	4	1
+4	562	4	0
+4	589	4.2	1
+4	591	4.2	0
+4	618	4.4	1
+4	620	4.4	0
+4	647	4.6	1
+4	649	4.6	0
+4	676	4.8	1
+4	678	4.8	0
+4	705	5	1
+4	707	5	0
+4	734	5.2	1
+4	736	5.2	0
+4	763	5.4	1
+4	765	5.4	0
+4	792	5.6	1
+4	794	5.6	0
+4	821	5.8	1
+4	823	5.8	0
+4	850	6	1
+4	852	6	0
+4	879	6.2	1
+4	881	6.2	0
+4	908	6.4	1
+4	910	6.4	0
+4	937	6.6	1
+4	939	6.6	0
+4	966	6.8	1
+4	968	6.8	0
+4	995	7	1
+4	997	7	0
+4	1024	7.2	1
+4	1026	7.2	0
+4	1053	7.4	1
+4	1055	7.4	0
+4	1082	7.6	1
+4	1084	7.6	0
+4	1111	7.8	1
+4	1113	7.8	0
+4	1140	8	1
+4	1142	8	0
+4	1169	8.2	1
+4	1171	8.2	0
+4	1198	8.4	1
+4	1200	8.4	0
+4	1227	8.6	1
+4	1229	8.6	0
+4	1256	8.8	1
+4	1258	8.8	0
+4	1285	9	1
+4	1287	9	0
+4	1314	9.2	1
+4	1316	9.2	0
+4	1343	9.4	1
+4	1345	9.4	0
+4	1372	9.6	1
+4	1374	9.6	0
+4	1401	9.8	1
+4	1403	9.8	0
+4	1430	10	1
+4	1432	10	0
+5	0	0	0
+5	0	0	0
+5	0	0	0
+5	0	0	0
+5	0	0	0
+5	9	0.2	2112
+5	11	0.2	0
+5	38	0.4	2112
+5	40	0.4	0
+5	67	0.6	2112
+5	69	0.6	0
+5	96	0.8	2112
+5	98	0.8	0
+5	125	1	2112
+5	127	1	0
+5	154	1.2	2112
+5	156	1.2	0
+5	183	1.4	2112
+5	185	1.4	0
+5	212	1.6	2112
+5	214	1.6	0
+5	241	1.8	2112
+5	243	1.8	0
+5	270	2	2112
+5	272	2	0
+5	299	2.2	2112
+5	301	2.2	0
+5	328	2.4	2112
+5	330	2.4	0
+5	357	2.6	2112
+5	359	2.6	0
+5	386	2.8	2112
+5	388	2.8	0
+5	415	3	2112
+5	417	3	0
+5	444	3.2	2112
+5	446	3.2	0
+5	473	3.4	2112
+5	475	3.4	0
+5	502	3.6	2112
+5	504	3.6	0
+5	531	3.8	2112
+5	533	3.8	0
+5	560	4	2112
+5	562	4	0
+5	589	4.2	2112
+5	591	4.2	0
+5	618	4.4	2112
+5	620	4.4	0
+5	647	4.6	2112
+5	649	4.6	0
+5	676	4.8	2112
+5	678	4.8	0
+5	705	5	2112
+5	707	5	0
+5	734	5.2	2112
+5	736	5.2	0
+5	763	5.4	2112
+5	765	5.4	0
+5	792	5.6	2112
+5	794	5.6	0
+5	821	5.8	2112
+5	823	5.8	0
+5	850	6	2112
+5	852	6	0
+5	879	6.2	2112
+5	881	6.2	0
+5	908	6.4	2112
+5	910	6.4	0
+5	937	6.6	2112
+5	939	6.6	0
+5	966	6.8	2112
+5	968	6.8	0
+5	995	7	2112
+5	997	7	0
+5	1024	7.2	2112
+5	1026	7.2	0
+5	1053	7.4	2112
+5	1055	7.4	0
+5	1082	7.6	2112
+5	1084	7.6	0
+5	1111	7.8	2112
+5	1113	7.8	0
+5	1140	8	2112
+5	1142	8	0
+5	1169	8.2	2112
+5	1171	8.2	0
+5	1198	8.4	2112
+5	1200	8.4	0
+5	1227	8.6	2112
+5	1229	8.6	0
+5	1256	8.8	2112
+5	1258	8.8	0
+5	1285	9	2112
+5	1287	9	0
+5	1314	9.2	2112
+5	1316	9.2	0
+5	1343	9.4	2112
+5	1345	9.4	0
+5	1372	9.6	2112
+5	1374	9.6	0
+5	1401	9.8	2112
+5	1403	9.8	0
+5	1430	10	2112
+5	1432	10	0
+6	11	0.2	0
+6	40	0.4	0
+6	69	0.6	0
+6	98	0.8	0
+6	127	1	0
+6	156	1.2	0
+6	185	1.4	0
+6	214	1.6	0
+6	243	1.8	0
+6	272	2	0
+6	301	2.2	0
+6	330	2.4	0
+6	359	2.6	0
+6	388	2.8	0
+6	417	3	0
+6	446	3.2	0
+6	475	3.4	0
+6	504	3.6	0
+6	533	3.8	0
+6	562	4	0
+6	591	4.2	0
+6	620	4.4	0
+6	649	4.6	0
+6	678	4.8	0
+6	707	5	0
+6	736	5.2	0
+6	765	5.4	0
+6	794	5.6	0
+6	823	5.8	0
+6	852	6	0
+6	881	6.2	0
+6	910	6.4	0
+6	939	6.6	0
+6	968	6.8	0
+6	997	7	0
+6	1026	7.2	0
+6	1055	7.4	0
+6	1084	7.6	0
+6	1113	7.8	0
+6	1142	8	0
+6	1171	8.2	0
+6	1200	8.4	0
+6	1229	8.6	0
+6	1258	8.8	0
+6	1287	9	0
+6	1316	9.2	0
+6	1345	9.4	0
+6	1374	9.6	0
+6	1403	9.8	0
+6	1432	10	0
+7	9	0.2	2112
+7	38	0.4	2112
+7	67	0.6	2112
+7	96	0.8	2112
+7	125	1	2112
+7	154	1.2	2112
+7	183	1.4	2112
+7	212	1.6	2112
+7	241	1.8	2112
+7	270	2	2112
+7	299	2.2	2112
+7	328	2.4	2112
+7	357	2.6	2112
+7	386	2.8	2112
+7	415	3	2112
+7	444	3.2	2112
+7	473	3.4	2112
+7	502	3.6	2112
+7	531	3.8	2112
+7	560	4	2112
+7	589	4.2	2112
+7	618	4.4	2112
+7	647	4.6	2112
+7	676	4.8	2112
+7	705	5	2112
+7	734	5.2	2112
+7	763	5.4	2112
+7	792	5.6	2112
+7	821	5.8	2112
+7	850	6	2112
+7	879	6.2	2112
+7	908	6.4	2112
+7	937	6.6	2112
+7	966	6.8	2112
+7	995	7	2112
+7	1024	7.2	2112
+7	1053	7.4	2112
+7	1082	7.6	2112
+7	1111	7.8	2112
+7	1140	8	2112
+7	1169	8.2	2112
+7	1198	8.4	2112
+7	1227	8.6	2112
+7	1256	8.8	2112
+7	1285	9	2112
+7	1314	9.2	2112
+7	1343	9.4	2112
+7	1372	9.6	2112
+7	1401	9.8	2112
+7	1430	10	2112
+8	9	0.1	0
+8	9	0.2	0
+8	38	0.3	21120
+8	38	0.4	0
+8	67	0.5	21120
+8	67	0.6	0
+8	96	0.7	21120
+8	96	0.8	0
+8	125	0.9	21120
+8	125	1	0
+8	154	1.1	21120
+8	154	1.2	0
+8	183	1.3	21120
+8	183	1.4	0
+8	212	1.5	21120
+8	212	1.6	0
+8	241	1.7	21120
+8	241	1.8	0
+8	270	1.9	21120
+8	270	2	0
+8	299	2.1	21120
+8	299	2.2	0
+8	328	2.3	21120
+8	328	2.4	0
+8	357	2.5	21120
+8	357	2.6	0
+8	386	2.7	21120
+8	386	2.8	0
+8	415	2.9	21120
+8	415	3	0
+8	444	3.1	21120
+8	444	3.2	0
+8	473	3.3	21120
+8	473	3.4	0
+8	502	3.5	21120
+8	502	3.6	0
+8	531	3.7	21120
+8	531	3.8	0
+8	560	3.9	21120
+8	560	4	0
+8	589	4.1	21120
+8	589	4.2	0
+8	618	4.3	21120
+8	618	4.4	0
+8	647	4.5	21120
+8	647	4.6	0
+8	676	4.7	21120
+8	676	4.8	0
+8	705	4.9	21120
+8	705	5	0
+8	734	5.1	21120
+8	734	5.2	0
+8	763	5.3	21120
+8	763	5.4	0
+8	792	5.5	21120
+8	792	5.6	0
+8	821	5.7	21120
+8	821	5.8	0
+8	850	5.9	21120
+8	850	6	0
+8	879	6.1	21120
+8	879	6.2	0
+8	908	6.3	21120
+8	908	6.4	0
+8	937	6.5	21120
+8	937	6.6	0
+8	966	6.7	21120
+8	966	6.8	0
+8	995	6.9	21120
+8	995	7	0
+8	1024	7.1	21120
+8	1024	7.2	0
+8	1053	7.3	21120
+8	1053	7.4	0
+8	1082	7.5	21120
+8	1082	7.6	0
+8	1111	7.7	21120
+8	1111	7.8	0
+8	1140	7.9	21120
+8	1140	8	0
+8	1169	8.1	21120
+8	1169	8.2	0
+8	1198	8.3	21120
+8	1198	8.4	0
+8	1227	8.5	21120
+8	1227	8.6	0
+8	1256	8.7	21120
+8	1256	8.8	0
+8	1285	8.9	21120
+8	1285	9	0
+8	1314	9.1	21120
+8	1314	9.2	0
+8	1343	9.3	21120
+8	1343	9.4	0
+8	1372	9.5	21120
+8	1372	9.6	0
+8	1401	9.7	21120
+8	1401	9.8	0
+8	1430	9.9	21120
+8	1430	10	0
+9	11	0.2	2112
+9	40	0.4	2112
+9	69	0.6	2112
+9	98	0.8	2112
+9	127	1	2112
+9	156	1.2	2112
+9	185	1.4	2112
+9	214	1.6	2112
+9	243	1.8	2112
+9	272	2	2112
+9	301	2.2	2112
+9	330	2.4	2112
+9	359	2.6	2112
+9	388	2.8	2112
+9	417	3	2112
+9	446	3.2	2112
+9	475	3.4	2112
+9	504	3.6	2112
+9	533	3.8	2112
+9	562	4	2112
+9	591	4.2	2112
+9	620	4.4	2112
+9	649	4.6	2112
+9	678	4.8	2112
+9	707	5	2112
+9	736	5.2	2112
+9	765	5.4	2112
+9	794	5.6	2112
+9	823	5.8	2112
+9	852	6	2112
+9	881	6.2	2112
+9	910	6.4	2112
+9	939	6.6	2112
+9	968	6.8	2112
+9	997	7	2112
+9	1026	7.2	2112
+9	1055	7.4	2112
+9	1084	7.6	2112
+9	1113	7.8	2112
+9	1142	8	2112
+9	1171	8.2	2112
+9	1200	8.4	2112
+9	1229	8.6	2112
+9	1258	8.8	2112
+9	1287	9	2112
+9	1316	9.2	2112
+9	1345	9.4	2112
+9	1374	9.6	2112
+9	1403	9.8	2112
+9	1432	10	2112
+10	11	0.1	0
+10	11	0.2	0
+10	40	0.3	21120
+10	40	0.4	0
+10	69	0.5	21120
+10	69	0.6	0
+10	98	0.7	21120
+10	98	0.8	0
+10	127	0.9	21120
+10	127	1	0
+10	156	1.1	21120
+10	156	1.2	0
+10	185	1.3	21120
+10	185	1.4	0
+10	214	1.5	21120
+10	214	1.6	0
+10	243	1.7	21120
+10	243	1.8	0
+10	272	1.9	21120
+10	272	2	0
+10	301	2.1	21120
+10	301	2.2	0
+10	330	2.3	21120
+10	330	2.4	0
+10	359	2.5	21120
+10	359	2.6	0
+10	388	2.7	21120
+10	388	2.8	0
+10	417	2.9	21120
+10	417	3	0
+10	446	3.1	21120
+10	446	3.2	0
+10	475	3.3	21120
+10	475	3.4	0
+10	504	3.5	21120
+10	504	3.6	0
+10	533	3.7	21120
+10	533	3.8	0
+10	562	3.9	21120
+10	562	4	0
+10	591	4.1	21120
+10	591	4.2	0
+10	620	4.3	21120
+10	620	4.4	0
+10	649	4.5	21120
+10	649	4.6	0
+10	678	4.7	21120
+10	678	4.8	0
+10	707	4.9	21120
+10	707	5	0
+10	736	5.1	21120
+10	736	5.2	0
+10	765	5.3	21120
+10	765	5.4	0
+10	794	5.5	21120
+10	794	5.6	0
+10	823	5.7	21120
+10	823	5.8	0
+10	852	5.9	21120
+10	852	6	0
+10	881	6.1	21120
+10	881	6.2	0
+10	910	6.3	21120
+10	910	6.4	0
+10	939	6.5	21120
+10	939	6.6	0
+10	968	6.7	21120
+10	968	6.8	0
+10	997	6.9	21120
+10	997	7	0
+10	1026	7.1	21120
+10	1026	7.2	0
+10	1055	7.3	21120
+10	1055	7.4	0
+10	1084	7.5	21120
+10	1084	7.6	0
+10	1113	7.7	21120
+10	1113	7.8	0
+10	1142	7.9	21120
+10	1142	8	0
+10	1171	8.1	21120
+10	1171	8.2	0
+10	1200	8.3	21120
+10	1200	8.4	0
+10	1229	8.5	21120
+10	1229	8.6	0
+10	1258	8.7	21120
+10	1258	8.8	0
+10	1287	8.9	21120
+10	1287	9	0
+10	1316	9.1	21120
+10	1316	9.2	0
+10	1345	9.3	21120
+10	1345	9.4	0
+10	1374	9.5	21120
+10	1374	9.6	0
+10	1403	9.7	21120
+10	1403	9.8	0
+10	1432	9.9	21120
+10	1432	10	0
+13	1435	0.1	0
+13	1435	0.2	0
+13	1435	0.3	0
+13	1435	0.4	0
+13	1435	0.5	0
+13	1435	0.6	0
+13	1435	0.7	0
+13	1435	0.8	0
+13	1435	0.9	0
+13	1435	1	0
+13	1435	1.1	0
+13	1435	1.2	0
+13	1435	1.3	0
+13	1435	1.4	0
+13	1435	1.5	0
+13	1435	1.6	0
+13	1435	1.7	0
+13	1435	1.8	0
+13	1435	1.9	0
+13	1435	2	0
+13	1435	2.1	0
+13	1435	2.2	0
+13	1435	2.3	0
+13	1435	2.4	0
+13	1435	2.5	0
+13	1435	2.6	0
+13	1435	2.7	0
+13	1435	2.8	0
+13	1435	2.9	0
+13	1435	3	0
+13	1435	3.1	0
+13	1435	3.2	0
+13	1435	3.3	0
+13	1435	3.4	0
+13	1435	3.5	0
+13	1435	3.6	0
+13	1435	3.7	0
+13	1435	3.8	0
+13	1435	3.9	0
+13	1435	4	0
+13	1435	4.1	0
+13	1435	4.2	0
+13	1435	4.3	0
+13	1435	4.4	0
+13	1435	4.5	0
+13	1435	4.6	0
+13	1435	4.7	0
+13	1435	4.8	0
+13	1435	4.9	0
+13	1435	5	0
+13	1435	5.1	0
+13	1435	5.2	0
+13	1435	5.3	0
+13	1435	5.4	0
+13	1435	5.5	0
+13	1435	5.6	0
+13	1435	5.7	0
+13	1435	5.8	0
+13	1435	5.9	0
+13	1435	6	0
+13	1435	6.1	0
+13	1435	6.2	0
+13	1435	6.3	0
+13	1435	6.4	0
+13	1435	6.5	0
+13	1435	6.6	0
+13	1435	6.7	0
+13	1435	6.8	0
+13	1435	6.9	0
+13	1435	7	0
+13	1435	7.1	0
+13	1435	7.2	0
+13	1435	7.3	0
+13	1435	7.4	0
+13	1435	7.5	0
+13	1435	7.6	0
+13	1435	7.7	0
+13	1435	7.8	0
+13	1435	7.9	0
+13	1435	8	0
+13	1435	8.1	0
+13	1435	8.2	0
+13	1435	8.3	0
+13	1435	8.4	0
+13	1435	8.5	0
+13	1435	8.6	0
+13	1435	8.7	0
+13	1435	8.8	0
+13	1435	8.9	0
+13	1435	9	0
+13	1435	9.1	0
+13	1435	9.2	0
+13	1435	9.3	0
+13	1435	9.4	0
+13	1435	9.5	0
+13	1435	9.6	0
+13	1435	9.7	0
+13	1435	9.8	0
+13	1435	9.9	0
+13	1435	10	0
+14	1435	0.1	0
+14	1435	0.2	0
+14	1435	0.3	0
+14	1435	0.4	0
+14	1435	0.5	0
+14	1435	0.6	0
+14	1435	0.7	0
+14	1435	0.8	0
+14	1435	0.9	0
+14	1435	1	0
+14	1435	1.1	0
+14	1435	1.2	0
+14	1435	1.3	0
+14	1435	1.4	0
+14	1435	1.5	0
+14	1435	1.6	0
+14	1435	1.7	0
+14	1435	1.8	0
+14	1435	1.9	0
+14	1435	2	0
+14	1435	2.1	0
+14	1435	2.2	0
+14	1435	2.3	0
+14	1435	2.4	0
+14	1435	2.5	0
+14	1435	2.6	0
+14	1435	2.7	0
+14	1435	2.8	0
+14	1435	2.9	0
+14	1435	3	0
+14	1435	3.1	0
+14	1435	3.2	0
+14	1435	3.3	0
+14	1435	3.4	0
+14	1435	3.5	0
+14	1435	3.6	0
+14	1435	3.7	0
+14	1435	3.8	0
+14	1435	3.9	0
+14	1435	4	0
+14	1435	4.1	0
+14	1435	4.2	0
+14	1435	4.3	0
+14	1435	4.4	0
+14	1435	4.5	0
+14	1435	4.6	0
+14	1435	4.7	0
+14	1435	4.8	0
+14	1435	4.9	0
+14	1435	5	0
+14	1435	5.1	0
+14	1435	5.2	0
+14	1435	5.3	0
+14	1435	5.4	0
+14	1435	5.5	0
+14	1435	5.6	0
+14	1435	5.7	0
+14	1435	5.8	0
+14	1435	5.9	0
+14	1435	6	0
+14	1435	6.1	0
+14	1435	6.2	0
+14	1435	6.3	0
+14	1435	6.4	0
+14	1435	6.5	0
+14	1435	6.6	0
+14	1435	6.7	0
+14	1435	6.8	0
+14	1435	6.9	0
+14	1435	7	0
+14	1435	7.1	0
+14	1435	7.2	0
+14	1435	7.3	0
+14	1435	7.4	0
+14	1435	7.5	0
+14	1435	7.6	0
+14	1435	7.7	0
+14	1435	7.8	0
+14	1435	7.9	0
+14	1435	8	0
+14	1435	8.1	0
+14	1435	8.2	0
+14	1435	8.3	0
+14	1435	8.4	0
+14	1435	8.5	0
+14	1435	8.6	0
+14	1435	8.7	0
+14	1435	8.8	0
+14	1435	8.9	0
+14	1435	9	0
+14	1435	9.1	0
+14	1435	9.2	0
+14	1435	9.3	0
+14	1435	9.4	0
+14	1435	9.5	0
+14	1435	9.6	0
+14	1435	9.7	0
+14	1435	9.8	0
+14	1435	9.9	0
+14	1435	10	0
+15	31	0.200165149298	0.000165149298
+15	60	0.400165149298	0.000165149298
+15	89	0.600165149298	0.000165149298
+15	118	0.800165149298	0.000165149298
+15	147	1.000165149298	0.000165149298
+15	176	1.200165149298	0.000165149298
+15	205	1.400165149298	0.000165149298
+15	234	1.600165149298	0.000165149298
+15	263	1.800165149298	0.000165149298
+15	292	2.000165149298	0.000165149298
+15	321	2.200165149298	0.000165149298
+15	350	2.400165149298	0.000165149298
+15	379	2.600165149298	0.000165149298
+15	408	2.800165149298	0.000165149298
+15	437	3.000165149298	0.000165149298
+15	466	3.200165149298	0.000165149298
+15	495	3.400165149298	0.000165149298
+15	524	3.600165149298	0.000165149298
+15	553	3.800165149298	0.000165149298
+15	582	4.000165149298	0.000165149298
+15	611	4.200165149298	0.000165149298
+15	640	4.400165149298	0.000165149298
+15	669	4.600165149298	0.000165149298
+15	698	4.800165149298	0.000165149298
+15	727	5.000165149298	0.000165149298
+15	756	5.200165149298	0.000165149298
+15	785	5.400165149298	0.000165149298
+15	814	5.600165149298	0.000165149298
+15	843	5.800165149298	0.000165149298
+15	872	6.000165149298	0.000165149298
+15	901	6.200165149298	0.000165149298
+15	930	6.400165149298	0.000165149298
+15	959	6.600165149298	0.000165149298
+15	988	6.800165149298	0.000165149298
+15	1017	7.000165149298	0.000165149298
+15	1046	7.200165149298	0.000165149298
+15	1075	7.400165149298	0.000165149298
+15	1104	7.600165149298	0.000165149298
+15	1133	7.800165149298	0.000165149298
+15	1162	8.000165149298	0.000165149298
+15	1191	8.200165149298	0.000165149298
+15	1220	8.400165149298	0.000165149298
+15	1249	8.600165149298	0.000165149298
+15	1278	8.800165149298	0.000165149298
+15	1307	9.000165149298	0.000165149298
+15	1336	9.200165149298	0.000165149298
+15	1365	9.400165149298	0.000165149298
+15	1394	9.600165149298	0.000165149298
+15	1423	9.800165149298	0.000165149298
+16	0	0	0
+16	0	0	0
+16	11	0.2	1
+16	31	0.200165149298	0
+16	40	0.4	1
+16	60	0.400165149298	0
+16	69	0.6	1
+16	89	0.600165149298	0
+16	98	0.8	1
+16	118	0.800165149298	0
+16	127	1	1
+16	147	1.000165149298	0
+16	156	1.2	1
+16	176	1.200165149298	0
+16	185	1.4	1
+16	205	1.400165149298	0
+16	214	1.6	1
+16	234	1.600165149298	0
+16	243	1.8	1
+16	263	1.800165149298	0
+16	272	2	1
+16	292	2.000165149298	0
+16	301	2.2	1
+16	321	2.200165149298	0
+16	330	2.4	1
+16	350	2.400165149298	0
+16	359	2.6	1
+16	379	2.600165149298	0
+16	388	2.8	1
+16	408	2.800165149298	0
+16	417	3	1
+16	437	3.000165149298	0
+16	446	3.2	1
+16	466	3.200165149298	0
+16	475	3.4	1
+16	495	3.400165149298	0
+16	504	3.6	1
+16	524	3.600165149298	0
+16	533	3.8	1
+16	553	3.800165149298	0
+16	562	4	1
+16	582	4.000165149298	0
+16	591	4.2	1
+16	611	4.200165149298	0
+16	620	4.4	1
+16	640	4.400165149298	0
+16	649	4.6	1
+16	669	4.600165149298	0
+16	678	4.8	1
+16	698	4.800165149298	0
+16	707	5	1
+16	727	5.000165149298	0
+16	736	5.2	1
+16	756	5.200165149298	0
+16	765	5.4	1
+16	785	5.400165149298	0
+16	794	5.6	1
+16	814	5.600165149298	0
+16	823	5.8	1
+16	843	5.800165149298	0
+16	852	6	1
+16	872	6.000165149298	0
+16	881	6.2	1
+16	901	6.200165149298	0
+16	910	6.4	1
+16	930	6.400165149298	0
+16	939	6.6	1
+16	959	6.600165149298	0
+16	968	6.8	1
+16	988	6.800165149298	0
+16	997	7	1
+16	1017	7.000165149298	0
+16	1026	7.2	1
+16	1046	7.200165149298	0
+16	1055	7.4	1
+16	1075	7.400165149298	0
+16	1084	7.6	1
+16	1104	7.600165149298	0
+16	1113	7.8	1
+16	1133	7.800165149298	0
+16	1142	8	1
+16	1162	8.000165149298	0
+16	1171	8.2	1
+16	1191	8.200165149298	0
+16	1200	8.4	1
+16	1220	8.400165149298	0
+16	1229	8.6	1
+16	1249	8.600165149298	0
+16	1258	8.8	1
+16	1278	8.800165149298	0
+16	1287	9	1
+16	1307	9.000165149298	0
+16	1316	9.2	1
+16	1336	9.200165149298	0
+16	1345	9.4	1
+16	1365	9.400165149298	0
+16	1374	9.6	1
+16	1394	9.600165149298	0
+16	1403	9.8	1
+16	1423	9.800165149298	0
+16	1432	10	1
+17	9	0.2	0
+17	38	0.4	27
+17	67	0.6	7
+17	96	0.8	19
+17	125	1	18
+17	154	1.2	23
+17	183	1.4	24
+17	212	1.6	12
+17	241	1.8	1
+17	270	2	7
+17	299	2.2	14
+17	328	2.4	17
+17	357	2.6	25
+17	386	2.8	8
+17	415	3	20
+17	444	3.2	16
+17	473	3.4	5
+17	502	3.6	15
+17	531	3.8	0
+17	560	4	3
+17	589	4.2	17
+17	618	4.4	29
+17	647	4.6	19
+17	676	4.8	7
+17	705	5	1
+17	734	5.2	25
+17	763	5.4	0
+17	792	5.6	10
+17	821	5.8	23
+17	850	6	30
+17	879	6.2	18
+17	908	6.4	28
+17	937	6.6	0
+17	966	6.8	4
+17	995	7	5
+17	1024	7.2	8
+17	1053	7.4	17
+17	1082	7.6	4
+17	1111	7.8	10
+17	1140	8	31
+17	1169	8.2	1
+17	1198	8.4	7
+17	1227	8.6	25
+17	1256	8.8	6
+17	1285	9	11
+17	1314	9.2	18
+17	1343	9.4	0
+17	1372	9.6	3
+17	1401	9.8	12
+17	1430	10	10
+18	0	0	0
+18	0	0	0
+18	9	0.2	1
+18	10	0.2	0
+18	38	0.4	1
+18	39	0.4	0
+18	67	0.6	1
+18	68	0.6	0
+18	96	0.8	1
+18	97	0.8	0
+18	125	1	1
+18	126	1	0
+18	154	1.2	1
+18	155	1.2	0
+18	183	1.4	1
+18	184	1.4	0
+18	212	1.6	1
+18	213	1.6	0
+18	241	1.8	1
+18	242	1.8	0
+18	270	2	1
+18	271	2	0
+18	299	2.2	1
+18	300	2.2	0
+18	328	2.4	1
+18	329	2.4	0
+18	357	2.6	1
+18	358	2.6	0
+18	386	2.8	1
+18	387	2.8	0
+18	415	3	1
+18	416	3	0
+18	444	3.2	1
+18	445	3.2	0
+18	473	3.4	1
+18	474	3.4	0
+18	502	3.6	1
+18	503	3.6	0
+18	531	3.8	1
+18	532	3.8	0
+18	560	4	1
+18	561	4	0
+18	589	4.2	1
+18	590	4.2	0
+18	618	4.4	1
+18	619	4.4	0
+18	647	4.6	1
+18	648	4.6	0
+18	676	4.8	1
+18	677	4.8	0
+18	705	5	1
+18	706	5	0
+18	734	5.2	1
+18	735	5.2	0
+18	763	5.4	1
+18	764	5.4	0
+18	792	5.6	1
+18	793	5.6	0
+18	821	5.8	1
+18	822	5.8	0
+18	850	6	1
+18	851	6	0
+18	879	6.2	1
+18	880	6.2	0
+18	908	6.4	1
+18	909	6.4	0
+18	937	6.6	1
+18	938	6.6	0
+18	966	6.8	1
+18	967	6.8	0
+18	995	7	1
+18	996	7	0
+18	1024	7.2	1
+18	1025	7.2	0
+18	1053	7.4	1
+18	1054	7.4	0
+18	1082	7.6	1
+18	1083	7.6	0
+18	1111	7.8	1
+18	1112	7.8	0
+18	1140	8	1
+18	1141	8	0
+18	1169	8.2	1
+18	1170	8.2	0
+18	1198	8.4	1
+18	1199	8.4	0
+18	1227	8.6	1
+18	1228	8.6	0
+18	1256	8.8	1
+18	1257	8.8	0
+18	1285	9	1
+18	1286	9	0
+18	1314	9.2	1
+18	1315	9.2	0
+18	1343	9.4	1
+18	1344	9.4	0
+18	1372	9.6	1
+18	1373	9.6	0
+18	1401	9.8	1
+18	1402	9.8	0
+18	1430	10	1
+18	1431	10	0
+19	0	0	0
+19	0	0	0
+19	9	0.2	0
+19	9	0.2	2
+19	10	0.2	2
+19	10	0.2	0
+19	12	0.2	0
+19	12	0.2	0
+19	30	0.200165149298	0
+19	30	0.200165149298	0
+19	38	0.4	0
+19	38	0.4	2
+19	39	0.4	2
+19	39	0.4	0
+19	41	0.4	0
+19	41	0.4	0
+19	59	0.400165149298	0
+19	59	0.400165149298	0
+19	67	0.6	0
+19	67	0.6	2
+19	68	0.6	2
+19	68	0.6	0
+19	70	0.6	0
+19	70	0.6	0
+19	88	0.600165149298	0
+19	88	0.600165149298	0
+19	96	0.8	0
+19	96	0.8	2
+19	97	0.8	2
+19	97	0.8	0
+19	99	0.8	0
+19	99	0.8	0
+19	117	0.800165149298	0
+19	117	0.800165149298	0
+19	125	1	0
+19	125	1	2
+19	126	1	2
+19	126	1	0
+19	128	1	0
+19	128	1	0
+19	146	1.000165149298	0
+19	146	1.000165149298	0
+19	154	1.2	0
+19	154	1.2	2
+19	155	1.2	2
+19	155	1.2	0
+19	157	1.2	0
+19	157	1.2	0
+19	175	1.200165149298	0
+19	175	1.200165149298	0
+19	183	1.4	0
+19	183	1.4	2
+19	184	1.4	2
+19	184	1.4	0
+19	186	1.4	0
+19	186	1.4	0
+19	204	1.400165149298	0
+19	204	1.400165149298	0
+19	212	1.6	0
+19	212	1.6	2
+19	213	1.6	2
+19	213	1.6	0
+19	215	1.6	0
+19	215	1.6	0
+19	233	1.600165149298	0
+19	233	1.600165149298	0
+19	241	1.8	0
+19	241	1.8	2
+19	242	1.8	2
+19	242	1.8	0
+19	244	1.8	0
+19	244	1.8	0
+19	262	1.800165149298	0
+19	262	1.800165149298	0
+19	270	2	0
+19	270	2	2
+19	271	2	2
+19	271	2	0
+19	273	2	0
+19	273	2	0
+19	291	2.000165149298	0
+19	291	2.000165149298	0
+19	299	2.2	0
+19	299	2.2	2
+19	300	2.2	2
+19	300	2.2	0
+19	302	2.2	0
+19	302	2.2	0
+19	320	2.200165149298	0
+19	320	2.200165149298	0
+19	328	2.4	0
+19	328	2.4	2
+19	329	2.4	2
+19	329	2.4	0
+19	331	2.4	0
+19	331	2.4	0
+19	349	2.400165149298	0
+19	349	2.400165149298	0
+19	357	2.6	0
+19	357	2.6	2
+19	358	2.6	2
+19	358	2.6	0
+19	360	2.6	0
+19	360	2.6	0
+19	378	2.600165149298	0
+19	378	2.600165149298	0
+19	386	2.8	0
+19	386	2.8	2
+19	387	2.8	2
+19	387	2.8	0
+19	389	2.8	0
+19	389	2.8	0
+19	407	2.800165149298	0
+19	407	2.800165149298	0
+19	415	3	0
+19	415	3	2
+19	416	3	2
+19	416	3	0
+19	418	3	0
+19	418	3	0
+19	436	3.000165149298	0
+19	436	3.000165149298	0
+19	444	3.2	0
+19	444	3.2	2
+19	445	3.2	2
+19	445	3.2	0
+19	447	3.2	0
+19	447	3.2	0
+19	465	3.200165149298	0
+19	465	3.200165149298	0
+19	473	3.4	0
+19	473	3.4	2
+19	474	3.4	2
+19	474	3.4	0
+19	476	3.4	0
+19	476	3.4	0
+19	494	3.400165149298	0
+19	494	3.400165149298	0
+19	502	3.6	0
+19	502	3.6	2
+19	503	3.6	2
+19	503	3.6	0
+19	505	3.6	0
+19	505	3.6	0
+19	523	3.600165149298	0
+19	523	3.600165149298	0
+19	531	3.8	0
+19	531	3.8	2
+19	532	3.8	2
+19	532	3.8	0
+19	534	3.8	0
+19	534	3.8	0
+19	552	3.800165149298	0
+19	552	3.800165149298	0
+19	560	4	0
+19	560	4	2
+19	561	4	2
+19	561	4	0
+19	563	4	0
+19	563	4	0
+19	581	4.000165149298	0
+19	581	4.000165149298	0
+19	589	4.2	0
+19	589	4.2	2
+19	590	4.2	2
+19	590	4.2	0
+19	592	4.2	0
+19	592	4.2	0
+19	610	4.200165149298	0
+19	610	4.200165149298	0
+19	618	4.4	0
+19	618	4.4	2
+19	619	4.4	2
+19	619	4.4	0
+19	621	4.4	0
+19	621	4.4	0
+19	639	4.400165149298	0
+19	639	4.400165149298	0
+19	647	4.6	0
+19	647	4.6	2
+19	648	4.6	2
+19	648	4.6	0
+19	650	4.6	0
+19	650	4.6	0
+19	668	4.600165149298	0
+19	668	4.600165149298	0
+19	676	4.8	0
+19	676	4.8	2
+19	677	4.8	2
+19	677	4.8	0
+19	679	4.8	0
+19	679	4.8	0
+19	697	4.800165149298	0
+19	697	4.800165149298	0
+19	705	5	0
+19	705	5	2
+19	706	5	2
+19	706	5	0
+19	708	5	0
+19	708	5	0
+19	726	5.000165149298	0
+19	726	5.000165149298	0
+19	734	5.2	0
+19	734	5.2	2
+19	735	5.2	2
+19	735	5.2	0
+19	737	5.2	0
+19	737	5.2	0
+19	755	5.200165149298	0
+19	755	5.200165149298	0
+19	763	5.4	0
+19	763	5.4	2
+19	764	5.4	2
+19	764	5.4	0
+19	766	5.4	0
+19	766	5.4	0
+19	784	5.400165149298	0
+19	784	5.400165149298	0
+19	792	5.6	0
+19	792	5.6	2
+19	793	5.6	2
+19	793	5.6	0
+19	795	5.6	0
+19	795	5.6	0
+19	813	5.600165149298	0
+19	813	5.600165149298	0
+19	821	5.8	0
+19	821	5.8	2
+19	822	5.8	2
+19	822	5.8	0
+19	824	5.8	0
+19	824	5.8	0
+19	842	5.800165149298	0
+19	842	5.800165149298	0
+19	850	6	0
+19	850	6	2
+19	851	6	2
+19	851	6	0
+19	853	6	0
+19	853	6	0
+19	871	6.000165149298	0
+19	871	6.000165149298	0
+19	879	6.2	0
+19	879	6.2	2
+19	880	6.2	2
+19	880	6.2	0
+19	882	6.2	0
+19	882	6.2	0
+19	900	6.200165149298	0
+19	900	6.200165149298	0
+19	908	6.4	0
+19	908	6.4	2
+19	909	6.4	2
+19	909	6.4	0
+19	911	6.4	0
+19	911	6.4	0
+19	929	6.400165149298	0
+19	929	6.400165149298	0
+19	937	6.6	0
+19	937	6.6	2
+19	938	6.6	2
+19	938	6.6	0
+19	940	6.6	0
+19	940	6.6	0
+19	958	6.600165149298	0
+19	958	6.600165149298	0
+19	966	6.8	0
+19	966	6.8	2
+19	967	6.8	2
+19	967	6.8	0
+19	969	6.8	0
+19	969	6.8	0
+19	987	6.800165149298	0
+19	987	6.800165149298	0
+19	995	7	0
+19	995	7	2
+19	996	7	2
+19	996	7	0
+19	998	7	0
+19	998	7	0
+19	1016	7.000165149298	0
+19	1016	7.000165149298	0
+19	1024	7.2	0
+19	1024	7.2	2
+19	1025	7.2	2
+19	1025	7.2	0
+19	1027	7.2	0
+19	1027	7.2	0
+19	1045	7.200165149298	0
+19	1045	7.200165149298	0
+19	1053	7.4	0
+19	1053	7.4	2
+19	1054	7.4	2
+19	1054	7.4	0
+19	1056	7.4	0
+19	1056	7.4	0
+19	1074	7.400165149298	0
+19	1074	7.400165149298	0
+19	1082	7.6	0
+19	1082	7.6	2
+19	1083	7.6	2
+19	1083	7.6	0
+19	1085	7.6	0
+19	1085	7.6	0
+19	1103	7.600165149298	0
+19	1103	7.600165149298	0
+19	1111	7.8	0
+19	1111	7.8	2
+19	1112	7.8	2
+19	1112	7.8	0
+19	1114	7.8	0
+19	1114	7.8	0
+19	1132	7.800165149298	0
+19	1132	7.800165149298	0
+19	1140	8	0
+19	1140	8	2
+19	1141	8	2
+19	1141	8	0
+19	1143	8	0
+19	1143	8	0
+19	1161	8.000165149298	0
+19	1161	8.000165149298	0
+19	1169	8.2	0
+19	1169	8.2	2
+19	1170	8.2	2
+19	1170	8.2	0
+19	1172	8.2	0
+19	1172	8.2	0
+19	1190	8.200165149298	0
+19	1190	8.200165149298	0
+19	1198	8.4	0
+19	1198	8.4	2
+19	1199	8.4	2
+19	1199	8.4	0
+19	1201	8.4	0
+19	1201	8.4	0
+19	1219	8.400165149298	0
+19	1219	8.400165149298	0
+19	1227	8.6	0
+19	1227	8.6	2
+19	1228	8.6	2
+19	1228	8.6	0
+19	1230	8.6	0
+19	1230	8.6	0
+19	1248	8.600165149298	0
+19	1248	8.600165149298	0
+19	1256	8.8	0
+19	1256	8.8	2
+19	1257	8.8	2
+19	1257	8.8	0
+19	1259	8.8	0
+19	1259	8.8	0
+19	1277	8.800165149298	0
+19	1277	8.800165149298	0
+19	1285	9	0
+19	1285	9	2
+19	1286	9	2
+19	1286	9	0
+19	1288	9	0
+19	1288	9	0
+19	1306	9.000165149298	0
+19	1306	9.000165149298	0
+19	1314	9.2	0
+19	1314	9.2	2
+19	1315	9.2	2
+19	1315	9.2	0
+19	1317	9.2	0
+19	1317	9.2	0
+19	1335	9.200165149298	0
+19	1335	9.200165149298	0
+19	1343	9.4	0
+19	1343	9.4	2
+19	1344	9.4	2
+19	1344	9.4	0
+19	1346	9.4	0
+19	1346	9.4	0
+19	1364	9.400165149298	0
+19	1364	9.400165149298	0
+19	1372	9.6	0
+19	1372	9.6	2
+19	1373	9.6	2
+19	1373	9.6	0
+19	1375	9.6	0
+19	1375	9.6	0
+19	1393	9.600165149298	0
+19	1393	9.600165149298	0
+19	1401	9.8	0
+19	1401	9.8	2
+19	1402	9.8	2
+19	1402	9.8	0
+19	1404	9.8	0
+19	1404	9.8	0
+19	1422	9.800165149298	0
+19	1422	9.800165149298	0
+19	1430	10	0
+19	1430	10	2
+19	1431	10	2
+19	1431	10	0
+19	1433	10	0
+19	1433	10	0
+21	0	0	31
+22	15	0.200118	264
+22	44	0.400118	264
+22	73	0.600118	264
+22	102	0.800118	264
+22	131	1.000118	264
+22	160	1.200118	264
+22	189	1.400118	264
+22	218	1.600118	264
+22	247	1.800118	264
+22	276	2.000118	264
+22	305	2.200118	264
+22	334	2.400118	264
+22	363	2.600118	264
+22	392	2.800118	264
+22	421	3.000118	264
+22	450	3.200118	264
+22	479	3.400118	264
+22	508	3.600118	264
+22	537	3.800118	264
+22	566	4.000118	264
+22	595	4.200118	264
+22	624	4.400118	264
+22	653	4.600118	264
+22	682	4.800118	264
+22	711	5.000118	264
+22	740	5.200118	264
+22	769	5.400118	264
+22	798	5.600118	264
+22	827	5.800118	264
+22	856	6.000118	264
+22	885	6.200118	264
+22	914	6.400118	264
+22	943	6.600118	264
+22	972	6.800118	264
+22	1001	7.000118	264
+22	1030	7.200118	264
+22	1059	7.400118	264
+22	1088	7.600118	264
+22	1117	7.800118	264
+22	1146	8.000118	264
+22	1175	8.200118	264
+22	1204	8.400118	264
+22	1233	8.600118	264
+22	1262	8.800118	264
+22	1291	9.000118	264
+22	1320	9.200118	264
+22	1349	9.400118	264
+22	1378	9.600118	264
+22	1407	9.800118	264
+23	15	0.200118	264
+23	44	0.400118	264
+23	73	0.600118	264
+23	102	0.800118	264
+23	131	1.000118	264
+23	160	1.200118	264
+23	189	1.400118	264
+23	218	1.600118	264
+23	247	1.800118	264
+23	276	2.000118	264
+23	305	2.200118	264
+23	334	2.400118	264
+23	363	2.600118	264
+23	392	2.800118	264
+23	421	3.000118	264
+23	450	3.200118	264
+23	479	3.400118	264
+23	508	3.600118	264
+23	537	3.800118	264
+23	566	4.000118	264
+23	595	4.200118	264
+23	624	4.400118	264
+23	653	4.600118	264
+23	682	4.800118	264
+23	711	5.000118	264
+23	740	5.200118	264
+23	769	5.400118	264
+23	798	5.600118	264
+23	827	5.800118	264
+23	856	6.000118	264
+23	885	6.200118	264
+23	914	6.400118	264
+23	943	6.600118	264
+23	972	6.800118	264
+23	1001	7.000118	264
+23	1030	7.200118	264
+23	1059	7.400118	264
+23	1088	7.600118	264
+23	1117	7.800118	264
+23	1146	8.000118	264
+23	1175	8.200118	264
+23	1204	8.400118	264
+23	1233	8.600118	264
+23	1262	8.800118	264
+23	1291	9.000118	264
+23	1320	9.200118	264
+23	1349	9.400118	264
+23	1378	9.600118	264
+23	1407	9.800118	264
+27	15	0.200118	264
+27	44	0.400118	264
+27	73	0.600118	264
+27	102	0.800118	264
+27	131	1.000118	264
+27	160	1.200118	264
+27	189	1.400118	264
+27	218	1.600118	264
+27	247	1.800118	264
+27	276	2.000118	264
+27	305	2.200118	264
+27	334	2.400118	264
+27	363	2.600118	264
+27	392	2.800118	264
+27	421	3.000118	264
+27	450	3.200118	264
+27	479	3.400118	264
+27	508	3.600118	264
+27	537	3.800118	264
+27	566	4.000118	264
+27	595	4.200118	264
+27	624	4.400118	264
+27	653	4.600118	264
+27	682	4.800118	264
+27	711	5.000118	264
+27	740	5.200118	264
+27	769	5.400118	264
+27	798	5.600118	264
+27	827	5.800118	264
+27	856	6.000118	264
+27	885	6.200118	264
+27	914	6.400118	264
+27	943	6.600118	264
+27	972	6.800118	264
+27	1001	7.000118	264
+27	1030	7.200118	264
+27	1059	7.400118	264
+27	1088	7.600118	264
+27	1117	7.800118	264
+27	1146	8.000118	264
+27	1175	8.200118	264
+27	1204	8.400118	264
+27	1233	8.600118	264
+27	1262	8.800118	264
+27	1291	9.000118	264
+27	1320	9.200118	264
+27	1349	9.400118	264
+27	1378	9.600118	264
+27	1407	9.800118	264
+28	31	0.200165149298	14
+28	60	0.400165149298	14
+28	89	0.600165149298	14
+28	118	0.800165149298	14
+28	147	1.000165149298	14
+28	176	1.200165149298	14
+28	205	1.400165149298	14
+28	234	1.600165149298	14
+28	263	1.800165149298	14
+28	292	2.000165149298	14
+28	321	2.200165149298	14
+28	350	2.400165149298	14
+28	379	2.600165149298	14
+28	408	2.800165149298	14
+28	437	3.000165149298	14
+28	466	3.200165149298	14
+28	495	3.400165149298	14
+28	524	3.600165149298	14
+28	553	3.800165149298	14
+28	582	4.000165149298	14
+28	611	4.200165149298	14
+28	640	4.400165149298	14
+28	669	4.600165149298	14
+28	698	4.800165149298	14
+28	727	5.000165149298	14
+28	756	5.200165149298	14
+28	785	5.400165149298	14
+28	814	5.600165149298	14
+28	843	5.800165149298	14
+28	872	6.000165149298	14
+28	901	6.200165149298	14
+28	930	6.400165149298	14
+28	959	6.600165149298	14
+28	988	6.800165149298	14
+28	1017	7.000165149298	14
+28	1046	7.200165149298	14
+28	1075	7.400165149298	14
+28	1104	7.600165149298	14
+28	1133	7.800165149298	14
+28	1162	8.000165149298	14
+28	1191	8.200165149298	14
+28	1220	8.400165149298	14
+28	1249	8.600165149298	14
+28	1278	8.800165149298	14
+28	1307	9.000165149298	14
+28	1336	9.200165149298	14
+28	1365	9.400165149298	14
+28	1394	9.600165149298	14
+28	1423	9.800165149298	14
+29	31	0.200165149298	14
+29	60	0.400165149298	14
+29	89	0.600165149298	14
+29	118	0.800165149298	14
+29	147	1.000165149298	14
+29	176	1.200165149298	14
+29	205	1.400165149298	14
+29	234	1.600165149298	14
+29	263	1.800165149298	14
+29	292	2.000165149298	14
+29	321	2.200165149298	14
+29	350	2.400165149298	14
+29	379	2.600165149298	14
+29	408	2.800165149298	14
+29	437	3.000165149298	14
+29	466	3.200165149298	14
+29	495	3.400165149298	14
+29	524	3.600165149298	14
+29	553	3.800165149298	14
+29	582	4.000165149298	14
+29	611	4.200165149298	14
+29	640	4.400165149298	14
+29	669	4.600165149298	14
+29	698	4.800165149298	14
+29	727	5.000165149298	14
+29	756	5.200165149298	14
+29	785	5.400165149298	14
+29	814	5.600165149298	14
+29	843	5.800165149298	14
+29	872	6.000165149298	14
+29	901	6.200165149298	14
+29	930	6.400165149298	14
+29	959	6.600165149298	14
+29	988	6.800165149298	14
+29	1017	7.000165149298	14
+29	1046	7.200165149298	14
+29	1075	7.400165149298	14
+29	1104	7.600165149298	14
+29	1133	7.800165149298	14
+29	1162	8.000165149298	14
+29	1191	8.200165149298	14
+29	1220	8.400165149298	14
+29	1249	8.600165149298	14
+29	1278	8.800165149298	14
+29	1307	9.000165149298	14
+29	1336	9.200165149298	14
+29	1365	9.400165149298	14
+29	1394	9.600165149298	14
+29	1423	9.800165149298	14
+33	31	0.200165149298	14
+33	60	0.400165149298	14
+33	89	0.600165149298	14
+33	118	0.800165149298	14
+33	147	1.000165149298	14
+33	176	1.200165149298	14
+33	205	1.400165149298	14
+33	234	1.600165149298	14
+33	263	1.800165149298	14
+33	292	2.000165149298	14
+33	321	2.200165149298	14
+33	350	2.400165149298	14
+33	379	2.600165149298	14
+33	408	2.800165149298	14
+33	437	3.000165149298	14
+33	466	3.200165149298	14
+33	495	3.400165149298	14
+33	524	3.600165149298	14
+33	553	3.800165149298	14
+33	582	4.000165149298	14
+33	611	4.200165149298	14
+33	640	4.400165149298	14
+33	669	4.600165149298	14
+33	698	4.800165149298	14
+33	727	5.000165149298	14
+33	756	5.200165149298	14
+33	785	5.400165149298	14
+33	814	5.600165149298	14
+33	843	5.800165149298	14
+33	872	6.000165149298	14
+33	901	6.200165149298	14
+33	930	6.400165149298	14
+33	959	6.600165149298	14
+33	988	6.800165149298	14
+33	1017	7.000165149298	14
+33	1046	7.200165149298	14
+33	1075	7.400165149298	14
+33	1104	7.600165149298	14
+33	1133	7.800165149298	14
+33	1162	8.000165149298	14
+33	1191	8.200165149298	14
+33	1220	8.400165149298	14
+33	1249	8.600165149298	14
+33	1278	8.800165149298	14
+33	1307	9.000165149298	14
+33	1336	9.200165149298	14
+33	1365	9.400165149298	14
+33	1394	9.600165149298	14
+33	1423	9.800165149298	14
+38	0	0	0
+38	0	0	0
+38	11	0.2	1
+38	31	0.200165149298	0
+38	40	0.4	1
+38	60	0.400165149298	0
+38	69	0.6	1
+38	89	0.600165149298	0
+38	98	0.8	1
+38	118	0.800165149298	0
+38	127	1	1
+38	147	1.000165149298	0
+38	156	1.2	1
+38	176	1.200165149298	0
+38	185	1.4	1
+38	205	1.400165149298	0
+38	214	1.6	1
+38	234	1.600165149298	0
+38	243	1.8	1
+38	263	1.800165149298	0
+38	272	2	1
+38	292	2.000165149298	0
+38	301	2.2	1
+38	321	2.200165149298	0
+38	330	2.4	1
+38	350	2.400165149298	0
+38	359	2.6	1
+38	379	2.600165149298	0
+38	388	2.8	1
+38	408	2.800165149298	0
+38	417	3	1
+38	437	3.000165149298	0
+38	446	3.2	1
+38	466	3.200165149298	0
+38	475	3.4	1
+38	495	3.400165149298	0
+38	504	3.6	1
+38	524	3.600165149298	0
+38	533	3.8	1
+38	553	3.800165149298	0
+38	562	4	1
+38	582	4.000165149298	0
+38	591	4.2	1
+38	611	4.200165149298	0
+38	620	4.4	1
+38	640	4.400165149298	0
+38	649	4.6	1
+38	669	4.600165149298	0
+38	678	4.8	1
+38	698	4.800165149298	0
+38	707	5	1
+38	727	5.000165149298	0
+38	736	5.2	1
+38	756	5.200165149298	0
+38	765	5.4	1
+38	785	5.400165149298	0
+38	794	5.6	1
+38	814	5.600165149298	0
+38	823	5.8	1
+38	843	5.800165149298	0
+38	852	6	1
+38	872	6.000165149298	0
+38	881	6.2	1
+38	901	6.200165149298	0
+38	910	6.4	1
+38	930	6.400165149298	0
+38	939	6.6	1
+38	959	6.600165149298	0
+38	968	6.8	1
+38	988	6.800165149298	0
+38	997	7	1
+38	1017	7.000165149298	0
+38	1026	7.2	1
+38	1046	7.200165149298	0
+38	1055	7.4	1
+38	1075	7.400165149298	0
+38	1084	7.6	1
+38	1104	7.600165149298	0
+38	1113	7.8	1
+38	1133	7.800165149298	0
+38	1142	8	1
+38	1162	8.000165149298	0
+38	1171	8.2	1
+38	1191	8.200165149298	0
+38	1200	8.4	1
+38	1220	8.400165149298	0
+38	1229	8.6	1
+38	1249	8.600165149298	0
+38	1258	8.8	1
+38	1278	8.800165149298	0
+38	1287	9	1
+38	1307	9.000165149298	0
+38	1316	9.2	1
+38	1336	9.200165149298	0
+38	1345	9.4	1
+38	1365	9.400165149298	0
+38	1374	9.6	1
+38	1394	9.600165149298	0
+38	1403	9.8	1
+38	1423	9.800165149298	0
+38	1432	10	1
+39	11	0.2	2.4e+07
+39	40	0.4	2.4e+07
+39	69	0.6	2.4e+07
+39	98	0.8	2.4e+07
+39	127	1	2.4e+07
+39	156	1.2	2.4e+07
+39	185	1.4	2.4e+07
+39	214	1.6	2.4e+07
+39	243	1.8	2.4e+07
+39	272	2	2.4e+07
+39	301	2.2	2.4e+07
+39	330	2.4	2.4e+07
+39	359	2.6	2.4e+07
+39	388	2.8	2.4e+07
+39	417	3	2.4e+07
+39	446	3.2	2.4e+07
+39	475	3.4	2.4e+07
+39	504	3.6	2.4e+07
+39	533	3.8	2.4e+07
+39	562	4	2.4e+07
+39	591	4.2	2.4e+07
+39	620	4.4	2.4e+07
+39	649	4.6	2.4e+07
+39	678	4.8	2.4e+07
+39	707	5	2.4e+07
+39	736	5.2	2.4e+07
+39	765	5.4	2.4e+07
+39	794	5.6	2.4e+07
+39	823	5.8	2.4e+07
+39	852	6	2.4e+07
+39	881	6.2	2.4e+07
+39	910	6.4	2.4e+07
+39	939	6.6	2.4e+07
+39	968	6.8	2.4e+07
+39	997	7	2.4e+07
+39	1026	7.2	2.4e+07
+39	1055	7.4	2.4e+07
+39	1084	7.6	2.4e+07
+39	1113	7.8	2.4e+07
+39	1142	8	2.4e+07
+39	1171	8.2	2.4e+07
+39	1200	8.4	2.4e+07
+39	1229	8.6	2.4e+07
+39	1258	8.8	2.4e+07
+39	1287	9	2.4e+07
+39	1316	9.2	2.4e+07
+39	1345	9.4	2.4e+07
+39	1374	9.6	2.4e+07
+39	1403	9.8	2.4e+07
+39	1432	10	2.4e+07
+40	15	0.200118	0
+40	15	0.200118	4.4e-05
+40	27	0.200162	0
+40	44	0.400118	0
+40	44	0.400118	4.4e-05
+40	56	0.400162	0
+40	73	0.600118	0
+40	73	0.600118	4.4e-05
+40	85	0.600162	0
+40	102	0.800118	0
+40	102	0.800118	4.4e-05
+40	114	0.800162	0
+40	131	1.000118	0
+40	131	1.000118	4.4e-05
+40	143	1.000162	0
+40	160	1.200118	0
+40	160	1.200118	4.4e-05
+40	172	1.200162	0
+40	189	1.400118	0
+40	189	1.400118	4.4e-05
+40	201	1.400162	0
+40	218	1.600118	0
+40	218	1.600118	4.4e-05
+40	230	1.600162	0
+40	247	1.800118	0
+40	247	1.800118	4.4e-05
+40	259	1.800162	0
+40	276	2.000118	0
+40	276	2.000118	4.4e-05
+40	288	2.000162	0
+40	305	2.200118	0
+40	305	2.200118	4.4e-05
+40	317	2.200162	0
+40	334	2.400118	0
+40	334	2.400118	4.4e-05
+40	346	2.400162	0
+40	363	2.600118	0
+40	363	2.600118	4.4e-05
+40	375	2.600162	0
+40	392	2.800118	0
+40	392	2.800118	4.4e-05
+40	404	2.800162	0
+40	421	3.000118	0
+40	421	3.000118	4.4e-05
+40	433	3.000162	0
+40	450	3.200118	0
+40	450	3.200118	4.4e-05
+40	462	3.200162	0
+40	479	3.400118	0
+40	479	3.400118	4.4e-05
+40	491	3.400162	0
+40	508	3.600118	0
+40	508	3.600118	4.4e-05
+40	520	3.600162	0
+40	537	3.800118	0
+40	537	3.800118	4.4e-05
+40	549	3.800162	0
+40	566	4.000118	0
+40	566	4.000118	4.4e-05
+40	578	4.000162	0
+40	595	4.200118	0
+40	595	4.200118	4.4e-05
+40	607	4.200162	0
+40	624	4.400118	0
+40	624	4.400118	4.4e-05
+40	636	4.400162	0
+40	653	4.600118	0
+40	653	4.600118	4.4e-05
+40	665	4.600162	0
+40	682	4.800118	0
+40	682	4.800118	4.4e-05
+40	694	4.800162	0
+40	711	5.000118	0
+40	711	5.000118	4.4e-05
+40	723	5.000162	0
+40	740	5.200118	0
+40	740	5.200118	4.4e-05
+40	752	5.200162	0
+40	769	5.400118	0
+40	769	5.400118	4.4e-05
+40	781	5.400162	0
+40	798	5.600118	0
+40	798	5.600118	4.4e-05
+40	810	5.600162	0
+40	827	5.800118	0
+40	827	5.800118	4.4e-05
+40	839	5.800162	0
+40	856	6.000118	0
+40	856	6.000118	4.4e-05
+40	868	6.000162	0
+40	885	6.200118	0
+40	885	6.200118	4.4e-05
+40	897	6.200162	0
+40	914	6.400118	0
+40	914	6.400118	4.4e-05
+40	926	6.400162	0
+40	943	6.600118	0
+40	943	6.600118	4.4e-05
+40	955	6.600162	0
+40	972	6.800118	0
+40	972	6.800118	4.4e-05
+40	984	6.800162	0
+40	1001	7.000118	0
+40	1001	7.000118	4.4e-05
+40	1013	7.000162	0
+40	1030	7.200118	0
+40	1030	7.200118	4.4e-05
+40	1042	7.200162	0
+40	1059	7.400118	0
+40	1059	7.400118	4.4e-05
+40	1071	7.400162	0
+40	1088	7.600118	0
+40	1088	7.600118	4.4e-05
+40	1100	7.600162	0
+40	1117	7.800118	0
+40	1117	7.800118	4.4e-05
+40	1129	7.800162	0
+40	1146	8.000118	0
+40	1146	8.000118	4.4e-05
+40	1158	8.000162	0
+40	1175	8.200118	0
+40	1175	8.200118	4.4e-05
+40	1187	8.200162	0
+40	1204	8.400118	0
+40	1204	8.400118	4.4e-05
+40	1216	8.400162	0
+40	1233	8.600118	0
+40	1233	8.600118	4.4e-05
+40	1245	8.600162	0
+40	1262	8.800118	0
+40	1262	8.800118	4.4e-05
+40	1274	8.800162	0
+40	1291	9.000118	0
+40	1291	9.000118	4.4e-05
+40	1303	9.000162	0
+40	1320	9.200118	0
+40	1320	9.200118	4.4e-05
+40	1332	9.200162	0
+40	1349	9.400118	0
+40	1349	9.400118	4.4e-05
+40	1361	9.400162	0
+40	1378	9.600118	0
+40	1378	9.600118	4.4e-05
+40	1390	9.600162	0
+40	1407	9.800118	0
+40	1407	9.800118	4.4e-05
+40	1419	9.800162	0
+42	11	0.2	264
+42	40	0.4	264
+42	69	0.6	264
+42	98	0.8	264
+42	127	1	264
+42	156	1.2	264
+42	185	1.4	264
+42	214	1.6	264
+42	243	1.8	264
+42	272	2	264
+42	301	2.2	264
+42	330	2.4	264
+42	359	2.6	264
+42	388	2.8	264
+42	417	3	264
+42	446	3.2	264
+42	475	3.4	264
+42	504	3.6	264
+42	533	3.8	264
+42	562	4	264
+42	591	4.2	264
+42	620	4.4	264
+42	649	4.6	264
+42	678	4.8	264
+42	707	5	264
+42	736	5.2	264
+42	765	5.4	264
+42	794	5.6	264
+42	823	5.8	264
+42	852	6	264
+42	881	6.2	264
+42	910	6.4	264
+42	939	6.6	264
+42	968	6.8	264
+42	997	7	264
+42	1026	7.2	264
+42	1055	7.4	264
+42	1084	7.6	264
+42	1113	7.8	264
+42	1142	8	264
+42	1171	8.2	264
+42	1200	8.4	264
+42	1229	8.6	264
+42	1258	8.8	264
+42	1287	9	264
+42	1316	9.2	264
+42	1345	9.4	264
+42	1374	9.6	264
+42	1403	9.8	264
+42	1432	10	264
+43	9	0.2	236
+43	38	0.4	236
+43	67	0.6	236
+43	96	0.8	236
+43	125	1	236
+43	154	1.2	236
+43	183	1.4	236
+43	212	1.6	236
+43	241	1.8	236
+43	270	2	236
+43	299	2.2	236
+43	328	2.4	236
+43	357	2.6	236
+43	386	2.8	236
+43	415	3	236
+43	444	3.2	236
+43	473	3.4	236
+43	502	3.6	236
+43	531	3.8	236
+43	560	4	236
+43	589	4.2	236
+43	618	4.4	236
+43	647	4.6	236
+43	676	4.8	236
+43	705	5	236
+43	734	5.2	236
+43	763	5.4	236
+43	792	5.6	236
+43	821	5.8	236
+43	850	6	236
+43	879	6.2	236
+43	908	6.4	236
+43	937	6.6	236
+43	966	6.8	236
+43	995	7	236
+43	1024	7.2	236
+43	1053	7.4	236
+43	1082	7.6	236
+43	1111	7.8	236
+43	1140	8	236
+43	1169	8.2	236
+43	1198	8.4	236
+43	1227	8.6	236
+43	1256	8.8	236
+43	1285	9	236
+43	1314	9.2	236
+43	1343	9.4	236
+43	1372	9.6	236
+43	1401	9.8	236
+43	1430	10	236
+44	31	0.200165149298	14
+44	60	0.400165149298	14
+44	89	0.600165149298	14
+44	118	0.800165149298	14
+44	147	1.000165149298	14
+44	176	1.200165149298	14
+44	205	1.400165149298	14
+44	234	1.600165149298	14
+44	263	1.800165149298	14
+44	292	2.000165149298	14
+44	321	2.200165149298	14
+44	350	2.400165149298	14
+44	379	2.600165149298	14
+44	408	2.800165149298	14
+44	437	3.000165149298	14
+44	466	3.200165149298	14
+44	495	3.400165149298	14
+44	524	3.600165149298	14
+44	553	3.800165149298	14
+44	582	4.000165149298	14
+44	611	4.200165149298	14
+44	640	4.400165149298	14
+44	669	4.600165149298	14
+44	698	4.800165149298	14
+44	727	5.000165149298	14
+44	756	5.200165149298	14
+44	785	5.400165149298	14
+44	814	5.600165149298	14
+44	843	5.800165149298	14
+44	872	6.000165149298	14
+44	901	6.200165149298	14
+44	930	6.400165149298	14
+44	959	6.600165149298	14
+44	988	6.800165149298	14
+44	1017	7.000165149298	14
+44	1046	7.200165149298	14
+44	1075	7.400165149298	14
+44	1104	7.600165149298	14
+44	1133	7.800165149298	14
+44	1162	8.000165149298	14
+44	1191	8.200165149298	14
+44	1220	8.400165149298	14
+44	1249	8.600165149298	14
+44	1278	8.800165149298	14
+44	1307	9.000165149298	14
+44	1336	9.200165149298	14
+44	1365	9.400165149298	14
+44	1394	9.600165149298	14
+44	1423	9.800165149298	14
+52	0	0	0
+52	0	0	0
+52	0	0	2
+52	12	0.2	3
+52	16	0.200118	2
+52	41	0.4	3
+52	45	0.400118	2
+52	70	0.6	3
+52	74	0.600118	2
+52	99	0.8	3
+52	103	0.800118	2
+52	128	1	3
+52	132	1.000118	2
+52	157	1.2	3
+52	161	1.200118	2
+52	186	1.4	3
+52	190	1.400118	2
+52	215	1.6	3
+52	219	1.600118	2
+52	244	1.8	3
+52	248	1.800118	2
+52	273	2	3
+52	277	2.000118	2
+52	302	2.2	3
+52	306	2.200118	2
+52	331	2.4	3
+52	335	2.400118	2
+52	360	2.6	3
+52	364	2.600118	2
+52	389	2.8	3
+52	393	2.800118	2
+52	418	3	3
+52	422	3.000118	2
+52	447	3.2	3
+52	451	3.200118	2
+52	476	3.4	3
+52	480	3.400118	2
+52	505	3.6	3
+52	509	3.600118	2
+52	534	3.8	3
+52	538	3.800118	2
+52	563	4	3
+52	567	4.000118	2
+52	592	4.2	3
+52	596	4.200118	2
+52	621	4.4	3
+52	625	4.400118	2
+52	650	4.6	3
+52	654	4.600118	2
+52	679	4.8	3
+52	683	4.800118	2
+52	708	5	3
+52	712	5.000118	2
+52	737	5.2	3
+52	741	5.200118	2
+52	766	5.4	3
+52	770	5.400118	2
+52	795	5.6	3
+52	799	5.600118	2
+52	824	5.8	3
+52	828	5.800118	2
+52	853	6	3
+52	857	6.000118	2
+52	882	6.2	3
+52	886	6.200118	2
+52	911	6.4	3
+52	915	6.400118	2
+52	940	6.6	3
+52	944	6.600118	2
+52	969	6.8	3
+52	973	6.800118	2
+52	998	7	3
+52	1002	7.000118	2
+52	1027	7.2	3
+52	1031	7.200118	2
+52	1056	7.4	3
+52	1060	7.400118	2
+52	1085	7.6	3
+52	1089	7.600118	2
+52	1114	7.8	3
+52	1118	7.800118	2
+52	1143	8	3
+52	1147	8.000118	2
+52	1172	8.2	3
+52	1176	8.200118	2
+52	1201	8.4	3
+52	1205	8.400118	2
+52	1230	8.6	3
+52	1234	8.600118	2
+52	1259	8.8	3
+52	1263	8.800118	2
+52	1288	9	3
+52	1292	9.000118	2
+52	1317	9.2	3
+52	1321	9.200118	2
+52	1346	9.4	3
+52	1350	9.400118	2
+52	1375	9.6	3
+52	1379	9.600118	2
+52	1404	9.8	3
+52	1408	9.800118	2
+52	1433	10	3
+53	0	0	1
+53	12	0.2	0
+53	16	0.200118	1
+53	26	0.200131149298	3
+53	30	0.200165149298	1
+53	41	0.4	0
+53	45	0.400118	1
+53	55	0.400131149298	3
+53	59	0.400165149298	1
+53	70	0.6	0
+53	74	0.600118	1
+53	84	0.600131149298	3
+53	88	0.600165149298	1
+53	99	0.8	0
+53	103	0.800118	1
+53	113	0.800131149298	3
+53	117	0.800165149298	1
+53	128	1	0
+53	132	1.000118	1
+53	142	1.000131149298	3
+53	146	1.000165149298	1
+53	157	1.2	0
+53	161	1.200118	1
+53	171	1.200131149298	3
+53	175	1.200165149298	1
+53	186	1.4	0
+53	190	1.400118	1
+53	200	1.400131149298	3
+53	204	1.400165149298	1
+53	215	1.6	0
+53	219	1.600118	1
+53	229	1.600131149298	3
+53	233	1.600165149298	1
+53	244	1.8	0
+53	248	1.800118	1
+53	258	1.800131149298	3
+53	262	1.800165149298	1
+53	273	2	0
+53	277	2.000118	1
+53	287	2.000131149298	3
+53	291	2.000165149298	1
+53	302	2.2	0
+53	306	2.200118	1
+53	316	2.200131149298	3
+53	320	2.200165149298	1
+53	331	2.4	0
+53	335	2.400118	1
+53	345	2.400131149298	3
+53	349	2.400165149298	1
+53	360	2.6	0
+53	364	2.600118	1
+53	374	2.600131149298	3
+53	378	2.600165149298	1
+53	389	2.8	0
+53	393	2.800118	1
+53	403	2.800131149298	3
+53	407	2.800165149298	1
+53	418	3	0
+53	422	3.000118	1
+53	432	3.000131149298	3
+53	436	3.000165149298	1
+53	447	3.2	0
+53	451	3.200118	1
+53	461	3.200131149298	3
+53	465	3.200165149298	1
+53	476	3.4	0
+53	480	3.400118	1
+53	490	3.400131149298	3
+53	494	3.400165149298	1
+53	505	3.6	0
+53	509	3.600118	1
+53	519	3.600131149298	3
+53	523	3.600165149298	1
+53	534	3.8	0
+53	538	3.800118	1
+53	548	3.800131149298	3
+53	552	3.800165149298	1
+53	563	4	0
+53	567	4.000118	1
+53	577	4.000131149298	3
+53	581	4.000165149298	1
+53	592	4.2	0
+53	596	4.200118	1
+53	606	4.200131149298	3
+53	610	4.200165149298	1
+53	621	4.4	0
+53	625	4.400118	1
+53	635	4.400131149298	3
+53	639	4.400165149298	1
+53	650	4.6	0
+53	654	4.600118	1
+53	664	4.600131149298	3
+53	668	4.600165149298	1
+53	679	4.8	0
+53	683	4.800118	1
+53	693	4.800131149298	3
+53	697	4.800165149298	1
+53	708	5	0
+53	712	5.000118	1
+53	722	5.000131149298	3
+53	726	5.000165149298	1
+53	737	5.2	0
+53	741	5.200118	1
+53	751	5.200131149298	3
+53	755	5.200165149298	1
+53	766	5.4	0
+53	770	5.400118	1
+53	780	5.400131149298	3
+53	784	5.400165149298	1
+53	795	5.6	0
+53	799	5.600118	1
+53	809	5.600131149298	3
+53	813	5.600165149298	1
+53	824	5.8	0
+53	828	5.800118	1
+53	838	5.800131149298	3
+53	842	5.800165149298	1
+53	853	6	0
+53	857	6.000118	1
+53	867	6.000131149298	3
+53	871	6.000165149298	1
+53	882	6.2	0
+53	886	6.200118	1
+53	896	6.200131149298	3
+53	900	6.200165149298	1
+53	911	6.4	0
+53	915	6.400118	1
+53	925	6.400131149298	3
+53	929	6.400165149298	1
+53	940	6.6	0
+53	944	6.600118	1
+53	954	6.600131149298	3
+53	958	6.600165149298	1
+53	969	6.8	0
+53	973	6.800118	1
+53	983	6.800131149298	3
+53	987	6.800165149298	1
+53	998	7	0
+53	1002	7.000118	1
+53	1012	7.000131149298	3
+53	1016	7.000165149298	1
+53	1027	7.2	0
+53	1031	7.200118	1
+53	1041	7.200131149298	3
+53	1045	7.200165149298	1
+53	1056	7.4	0
+53	1060	7.400118	1
+53	1070	7.400131149298	3
+53	1074	7.400165149298	1
+53	1085	7.6	0
+53	1089	7.600118	1
+53	1099	7.600131149298	3
+53	1103	7.600165149298	1
+53	1114	7.8	0
+53	1118	7.800118	1
+53	1128	7.800131149298	3
+53	1132	7.800165149298	1
+53	1143	8	0
+53	1147	8.000118	1
+53	1157	8.000131149298	3
+53	1161	8.000165149298	1
+53	1172	8.2	0
+53	1176	8.200118	1
+53	1186	8.200131149298	3
+53	1190	8.200165149298	1
+53	1201	8.4	0
+53	1205	8.400118	1
+53	1215	8.400131149298	3
+53	1219	8.400165149298	1
+53	1230	8.6	0
+53	1234	8.600118	1
+53	1244	8.600131149298	3
+53	1248	8.600165149298	1
+53	1259	8.8	0
+53	1263	8.800118	1
+53	1273	8.800131149298	3
+53	1277	8.800165149298	1
+53	1288	9	0
+53	1292	9.000118	1
+53	1302	9.000131149298	3
+53	1306	9.000165149298	1
+53	1317	9.2	0
+53	1321	9.200118	1
+53	1331	9.200131149298	3
+53	1335	9.200165149298	1
+53	1346	9.4	0
+53	1350	9.400118	1
+53	1360	9.400131149298	3
+53	1364	9.400165149298	1
+53	1375	9.6	0
+53	1379	9.600118	1
+53	1389	9.600131149298	3
+53	1393	9.600165149298	1
+53	1404	9.8	0
+53	1408	9.800118	1
+53	1418	9.800131149298	3
+53	1422	9.800165149298	1
+53	1433	10	0
+54	12	0.2	1
+54	13	0.2	2
+54	15	0.200118	1
+54	16	0.200118	0
+54	41	0.4	1
+54	42	0.4	2
+54	44	0.400118	1
+54	45	0.400118	0
+54	70	0.6	1
+54	71	0.6	2
+54	73	0.600118	1
+54	74	0.600118	0
+54	99	0.8	1
+54	100	0.8	2
+54	102	0.800118	1
+54	103	0.800118	0
+54	128	1	1
+54	129	1	2
+54	131	1.000118	1
+54	132	1.000118	0
+54	157	1.2	1
+54	158	1.2	2
+54	160	1.200118	1
+54	161	1.200118	0
+54	186	1.4	1
+54	187	1.4	2
+54	189	1.400118	1
+54	190	1.400118	0
+54	215	1.6	1
+54	216	1.6	2
+54	218	1.600118	1
+54	219	1.600118	0
+54	244	1.8	1
+54	245	1.8	2
+54	247	1.800118	1
+54	248	1.800118	0
+54	273	2	1
+54	274	2	2
+54	276	2.000118	1
+54	277	2.000118	0
+54	302	2.2	1
+54	303	2.2	2
+54	305	2.200118	1
+54	306	2.200118	0
+54	331	2.4	1
+54	332	2.4	2
+54	334	2.400118	1
+54	335	2.400118	0
+54	360	2.6	1
+54	361	2.6	2
+54	363	2.600118	1
+54	364	2.600118	0
+54	389	2.8	1
+54	390	2.8	2
+54	392	2.800118	1
+54	393	2.800118	0
+54	418	3	1
+54	419	3	2
+54	421	3.000118	1
+54	422	3.000118	0
+54	447	3.2	1
+54	448	3.2	2
+54	450	3.200118	1
+54	451	3.200118	0
+54	476	3.4	1
+54	477	3.4	2
+54	479	3.400118	1
+54	480	3.400118	0
+54	505	3.6	1
+54	506	3.6	2
+54	508	3.600118	1
+54	509	3.600118	0
+54	534	3.8	1
+54	535	3.8	2
+54	537	3.800118	1
+54	538	3.800118	0
+54	563	4	1
+54	564	4	2
+54	566	4.000118	1
+54	567	4.000118	0
+54	592	4.2	1
+54	593	4.2	2
+54	595	4.200118	1
+54	596	4.200118	0
+54	621	4.4	1
+54	622	4.4	2
+54	624	4.400118	1
+54	625	4.400118	0
+54	650	4.6	1
+54	651	4.6	2
+54	653	4.600118	1
+54	654	4.600118	0
+54	679	4.8	1
+54	680	4.8	2
+54	682	4.800118	1
+54	683	4.800118	0
+54	708	5	1
+54	709	5	2
+54	711	5.000118	1
+54	712	5.000118	0
+54	737	5.2	1
+54	738	5.2	2
+54	740	5.200118	1
+54	741	5.200118	0
+54	766	5.4	1
+54	767	5.4	2
+54	769	5.400118	1
+54	770	5.400118	0
+54	795	5.6	1
+54	796	5.6	2
+54	798	5.600118	1
+54	799	5.600118	0
+54	824	5.8	1
+54	825	5.8	2
+54	827	5.800118	1
+54	828	5.800118	0
+54	853	6	1
+54	854	6	2
+54	856	6.000118	1
+54	857	6.000118	0
+54	882	6.2	1
+54	883	6.2	2
+54	885	6.200118	1
+54	886	6.200118	0
+54	911	6.4	1
+54	912	6.4	2
+54	914	6.400118	1
+54	915	6.400118	0
+54	940	6.6	1
+54	941	6.6	2
+54	943	6.600118	1
+54	944	6.600118	0
+54	969	6.8	1
+54	970	6.8	2
+54	972	6.800118	1
+54	973	6.800118	0
+54	998	7	1
+54	999	7	2
+54	1001	7.000118	1
+54	1002	7.000118	0
+54	1027	7.2	1
+54	1028	7.2	2
+54	1030	7.200118	1
+54	1031	7.200118	0
+54	1056	7.4	1
+54	1057	7.4	2
+54	1059	7.400118	1
+54	1060	7.400118	0
+54	1085	7.6	1
+54	1086	7.6	2
+54	1088	7.600118	1
+54	1089	7.600118	0
+54	1114	7.8	1
+54	1115	7.8	2
+54	1117	7.800118	1
+54	1118	7.800118	0
+54	1143	8	1
+54	1144	8	2
+54	1146	8.000118	1
+54	1147	8.000118	0
+54	1172	8.2	1
+54	1173	8.2	2
+54	1175	8.200118	1
+54	1176	8.200118	0
+54	1201	8.4	1
+54	1202	8.4	2
+54	1204	8.400118	1
+54	1205	8.400118	0
+54	1230	8.6	1
+54	1231	8.6	2
+54	1233	8.600118	1
+54	1234	8.600118	0
+54	1259	8.8	1
+54	1260	8.8	2
+54	1262	8.800118	1
+54	1263	8.800118	0
+54	1288	9	1
+54	1289	9	2
+54	1291	9.000118	1
+54	1292	9.000118	0
+54	1317	9.2	1
+54	1318	9.2	2
+54	1320	9.200118	1
+54	1321	9.200118	0
+54	1346	9.4	1
+54	1347	9.4	2
+54	1349	9.400118	1
+54	1350	9.400118	0
+54	1375	9.6	1
+54	1376	9.6	2
+54	1378	9.600118	1
+54	1379	9.600118	0
+54	1404	9.8	1
+54	1405	9.8	2
+54	1407	9.800118	1
+54	1408	9.800118	0
+54	1433	10	1
+54	1434	10	2
+55	0	0	0
+65	6	0.2	208
+65	35	0.4	208
+65	64	0.6	208
+65	93	0.8	208
+65	122	1	208
+65	151	1.2	208
+65	180	1.4	208
+65	209	1.6	208
+65	238	1.8	208
+65	267	2	208
+65	296	2.2	208
+65	325	2.4	208
+65	354	2.6	208
+65	383	2.8	208
+65	412	3	208
+65	441	3.2	208
+65	470	3.4	208
+65	499	3.6	208
+65	528	3.8	208
+65	557	4	208
+65	586	4.2	208
+65	615	4.4	208
+65	644	4.6	208
+65	673	4.8	208
+65	702	5	208
+65	731	5.2	208
+65	760	5.4	208
+65	789	5.6	208
+65	818	5.8	208
+65	847	6	208
+65	876	6.2	208
+65	905	6.4	208
+65	934	6.6	208
+65	963	6.8	208
+65	992	7	208
+65	1021	7.2	208
+65	1050	7.4	208
+65	1079	7.6	208
+65	1108	7.8	208
+65	1137	8	208
+65	1166	8.2	208
+65	1195	8.4	208
+65	1224	8.6	208
+65	1253	8.8	208
+65	1282	9	208
+65	1311	9.2	208
+65	1340	9.4	208
+65	1369	9.6	208
+65	1398	9.8	208
+65	1427	10	208
+66	6	0.1	0
+66	6	0.2	0
+66	35	0.3	16640
+66	35	0.4	0
+66	64	0.5	16640
+66	64	0.6	0
+66	93	0.7	16640
+66	93	0.8	0
+66	122	0.9	16640
+66	122	1	0
+66	151	1.1	16640
+66	151	1.2	0
+66	180	1.3	16640
+66	180	1.4	0
+66	209	1.5	16640
+66	209	1.6	0
+66	238	1.7	16640
+66	238	1.8	0
+66	267	1.9	16640
+66	267	2	0
+66	296	2.1	16640
+66	296	2.2	0
+66	325	2.3	16640
+66	325	2.4	0
+66	354	2.5	16640
+66	354	2.6	0
+66	383	2.7	16640
+66	383	2.8	0
+66	412	2.9	16640
+66	412	3	0
+66	441	3.1	16640
+66	441	3.2	0
+66	470	3.3	16640
+66	470	3.4	0
+66	499	3.5	16640
+66	499	3.6	0
+66	528	3.7	16640
+66	528	3.8	0
+66	557	3.9	16640
+66	557	4	0
+66	586	4.1	16640
+66	586	4.2	0
+66	615	4.3	16640
+66	615	4.4	0
+66	644	4.5	16640
+66	644	4.6	0
+66	673	4.7	16640
+66	673	4.8	0
+66	702	4.9	16640
+66	702	5	0
+66	731	5.1	16640
+66	731	5.2	0
+66	760	5.3	16640
+66	760	5.4	0
+66	789	5.5	16640
+66	789	5.6	0
+66	818	5.7	16640
+66	818	5.8	0
+66	847	5.9	16640
+66	847	6	0
+66	876	6.1	16640
+66	876	6.2	0
+66	905	6.3	16640
+66	905	6.4	0
+66	934	6.5	16640
+66	934	6.6	0
+66	963	6.7	16640
+66	963	6.8	0
+66	992	6.9	16640
+66	992	7	0
+66	1021	7.1	16640
+66	1021	7.2	0
+66	1050	7.3	16640
+66	1050	7.4	0
+66	1079	7.5	16640
+66	1079	7.6	0
+66	1108	7.7	16640
+66	1108	7.8	0
+66	1137	7.9	16640
+66	1137	8	0
+66	1166	8.1	16640
+66	1166	8.2	0
+66	1195	8.3	16640
+66	1195	8.4	0
+66	1224	8.5	16640
+66	1224	8.6	0
+66	1253	8.7	16640
+66	1253	8.8	0
+66	1282	8.9	16640
+66	1282	9	0
+66	1311	9.1	16640
+66	1311	9.2	0
+66	1340	9.3	16640
+66	1340	9.4	0
+66	1369	9.5	16640
+66	1369	9.6	0
+66	1398	9.7	16640
+66	1398	9.8	0
+66	1427	9.9	16640
+66	1427	10	0
+68	0	0	0
+69	0	0	0
+70	0	0	0
+72	1435	0.1	0
+72	1435	0.2	0
+72	1435	0.3	0
+72	1435	0.4	0
+72	1435	0.5	0
+72	1435	0.6	0
+72	1435	0.7	0
+72	1435	0.8	0
+72	1435	0.9	0
+72	1435	1	0
+72	1435	1.1	0
+72	1435	1.2	0
+72	1435	1.3	0
+72	1435	1.4	0
+72	1435	1.5	0
+72	1435	1.6	0
+72	1435	1.7	0
+72	1435	1.8	0
+72	1435	1.9	0
+72	1435	2	0
+72	1435	2.1	0
+72	1435	2.2	0
+72	1435	2.3	0
+72	1435	2.4	0
+72	1435	2.5	0
+72	1435	2.6	0
+72	1435	2.7	0
+72	1435	2.8	0
+72	1435	2.9	0
+72	1435	3	0
+72	1435	3.1	0
+72	1435	3.2	0
+72	1435	3.3	0
+72	1435	3.4	0
+72	1435	3.5	0
+72	1435	3.6	0
+72	1435	3.7	0
+72	1435	3.8	0
+72	1435	3.9	0
+72	1435	4	0
+72	1435	4.1	0
+72	1435	4.2	0
+72	1435	4.3	0
+72	1435	4.4	0
+72	1435	4.5	0
+72	1435	4.6	0
+72	1435	4.7	0
+72	1435	4.8	0
+72	1435	4.9	0
+72	1435	5	0
+72	1435	5.1	0
+72	1435	5.2	0
+72	1435	5.3	0
+72	1435	5.4	0
+72	1435	5.5	0
+72	1435	5.6	0
+72	1435	5.7	0
+72	1435	5.8	0
+72	1435	5.9	0
+72	1435	6	0
+72	1435	6.1	0
+72	1435	6.2	0
+72	1435	6.3	0
+72	1435	6.4	0
+72	1435	6.5	0
+72	1435	6.6	0
+72	1435	6.7	0
+72	1435	6.8	0
+72	1435	6.9	0
+72	1435	7	0
+72	1435	7.1	0
+72	1435	7.2	0
+72	1435	7.3	0
+72	1435	7.4	0
+72	1435	7.5	0
+72	1435	7.6	0
+72	1435	7.7	0
+72	1435	7.8	0
+72	1435	7.9	0
+72	1435	8	0
+72	1435	8.1	0
+72	1435	8.2	0
+72	1435	8.3	0
+72	1435	8.4	0
+72	1435	8.5	0
+72	1435	8.6	0
+72	1435	8.7	0
+72	1435	8.8	0
+72	1435	8.9	0
+72	1435	9	0
+72	1435	9.1	0
+72	1435	9.2	0
+72	1435	9.3	0
+72	1435	9.4	0
+72	1435	9.5	0
+72	1435	9.6	0
+72	1435	9.7	0
+72	1435	9.8	0
+72	1435	9.9	0
+72	1435	10	0
+73	4	0.2	200
+73	34	0.4	200
+73	63	0.6	200
+73	92	0.8	200
+73	121	1	200
+73	150	1.2	200
+73	179	1.4	200
+73	208	1.6	200
+73	237	1.8	200
+73	266	2	200
+73	295	2.2	200
+73	324	2.4	200
+73	353	2.6	200
+73	382	2.8	200
+73	411	3	200
+73	440	3.2	200
+73	469	3.4	200
+73	498	3.6	200
+73	527	3.8	200
+73	556	4	200
+73	585	4.2	200
+73	614	4.4	200
+73	643	4.6	200
+73	672	4.8	200
+73	701	5	200
+73	730	5.2	200
+73	759	5.4	200
+73	788	5.6	200
+73	817	5.8	200
+73	846	6	200
+73	875	6.2	200
+73	904	6.4	200
+73	933	6.6	200
+73	962	6.8	200
+73	991	7	200
+73	1020	7.2	200
+73	1049	7.4	200
+73	1078	7.6	200
+73	1107	7.8	200
+73	1136	8	200
+73	1165	8.2	200
+73	1194	8.4	200
+73	1223	8.6	200
+73	1252	8.8	200
+73	1281	9	200
+73	1310	9.2	200
+73	1339	9.4	200
+73	1368	9.6	200
+73	1397	9.8	200
+73	1426	10	200
+80	0	0	0
+80	0	0	0
+80	0	0	0
+80	0	0	0
+80	0	0	0
+81	0	0	0
+81	0	0	0
+81	0	0	0
+81	0	0	0
+81	0	0	0
+84	1435	0.1	0
+84	1435	0.2	0
+84	1435	0.3	0
+84	1435	0.4	0
+84	1435	0.5	0
+84	1435	0.6	0
+84	1435	0.7	0
+84	1435	0.8	0
+84	1435	0.9	0
+84	1435	1	0
+84	1435	1.1	0
+84	1435	1.2	0
+84	1435	1.3	0
+84	1435	1.4	0
+84	1435	1.5	0
+84	1435	1.6	0
+84	1435	1.7	0
+84	1435	1.8	0
+84	1435	1.9	0
+84	1435	2	0
+84	1435	2.1	0
+84	1435	2.2	0
+84	1435	2.3	0
+84	1435	2.4	0
+84	1435	2.5	0
+84	1435	2.6	0
+84	1435	2.7	0
+84	1435	2.8	0
+84	1435	2.9	0
+84	1435	3	0
+84	1435	3.1	0
+84	1435	3.2	0
+84	1435	3.3	0
+84	1435	3.4	0
+84	1435	3.5	0
+84	1435	3.6	0
+84	1435	3.7	0
+84	1435	3.8	0
+84	1435	3.9	0
+84	1435	4	0
+84	1435	4.1	0
+84	1435	4.2	0
+84	1435	4.3	0
+84	1435	4.4	0
+84	1435	4.5	0
+84	1435	4.6	0
+84	1435	4.7	0
+84	1435	4.8	0
+84	1435	4.9	0
+84	1435	5	0
+84	1435	5.1	0
+84	1435	5.2	0
+84	1435	5.3	0
+84	1435	5.4	0
+84	1435	5.5	0
+84	1435	5.6	0
+84	1435	5.7	0
+84	1435	5.8	0
+84	1435	5.9	0
+84	1435	6	0
+84	1435	6.1	0
+84	1435	6.2	0
+84	1435	6.3	0
+84	1435	6.4	0
+84	1435	6.5	0
+84	1435	6.6	0
+84	1435	6.7	0
+84	1435	6.8	0
+84	1435	6.9	0
+84	1435	7	0
+84	1435	7.1	0
+84	1435	7.2	0
+84	1435	7.3	0
+84	1435	7.4	0
+84	1435	7.5	0
+84	1435	7.6	0
+84	1435	7.7	0
+84	1435	7.8	0
+84	1435	7.9	0
+84	1435	8	0
+84	1435	8.1	0
+84	1435	8.2	0
+84	1435	8.3	0
+84	1435	8.4	0
+84	1435	8.5	0
+84	1435	8.6	0
+84	1435	8.7	0
+84	1435	8.8	0
+84	1435	8.9	0
+84	1435	9	0
+84	1435	9.1	0
+84	1435	9.2	0
+84	1435	9.3	0
+84	1435	9.4	0
+84	1435	9.5	0
+84	1435	9.6	0
+84	1435	9.7	0
+84	1435	9.8	0
+84	1435	9.9	0
+84	1435	10	0
+86	1435	0.1	0
+86	1435	0.2	0
+86	1435	0.3	0
+86	1435	0.4	0
+86	1435	0.5	0
+86	1435	0.6	0
+86	1435	0.7	0
+86	1435	0.8	0
+86	1435	0.9	0
+86	1435	1	0
+86	1435	1.1	0
+86	1435	1.2	0
+86	1435	1.3	0
+86	1435	1.4	0
+86	1435	1.5	0
+86	1435	1.6	0
+86	1435	1.7	0
+86	1435	1.8	0
+86	1435	1.9	0
+86	1435	2	0
+86	1435	2.1	0
+86	1435	2.2	0
+86	1435	2.3	0
+86	1435	2.4	0
+86	1435	2.5	0
+86	1435	2.6	0
+86	1435	2.7	0
+86	1435	2.8	0
+86	1435	2.9	0
+86	1435	3	0
+86	1435	3.1	0
+86	1435	3.2	0
+86	1435	3.3	0
+86	1435	3.4	0
+86	1435	3.5	0
+86	1435	3.6	0
+86	1435	3.7	0
+86	1435	3.8	0
+86	1435	3.9	0
+86	1435	4	0
+86	1435	4.1	0
+86	1435	4.2	0
+86	1435	4.3	0
+86	1435	4.4	0
+86	1435	4.5	0
+86	1435	4.6	0
+86	1435	4.7	0
+86	1435	4.8	0
+86	1435	4.9	0
+86	1435	5	0
+86	1435	5.1	0
+86	1435	5.2	0
+86	1435	5.3	0
+86	1435	5.4	0
+86	1435	5.5	0
+86	1435	5.6	0
+86	1435	5.7	0
+86	1435	5.8	0
+86	1435	5.9	0
+86	1435	6	0
+86	1435	6.1	0
+86	1435	6.2	0
+86	1435	6.3	0
+86	1435	6.4	0
+86	1435	6.5	0
+86	1435	6.6	0
+86	1435	6.7	0
+86	1435	6.8	0
+86	1435	6.9	0
+86	1435	7	0
+86	1435	7.1	0
+86	1435	7.2	0
+86	1435	7.3	0
+86	1435	7.4	0
+86	1435	7.5	0
+86	1435	7.6	0
+86	1435	7.7	0
+86	1435	7.8	0
+86	1435	7.9	0
+86	1435	8	0
+86	1435	8.1	0
+86	1435	8.2	0
+86	1435	8.3	0
+86	1435	8.4	0
+86	1435	8.5	0
+86	1435	8.6	0
+86	1435	8.7	0
+86	1435	8.8	0
+86	1435	8.9	0
+86	1435	9	0
+86	1435	9.1	0
+86	1435	9.2	0
+86	1435	9.3	0
+86	1435	9.4	0
+86	1435	9.5	0
+86	1435	9.6	0
+86	1435	9.7	0
+86	1435	9.8	0
+86	1435	9.9	0
+86	1435	10	0
+89	1435	0.1	0
+89	1435	0.2	0
+89	1435	0.3	0
+89	1435	0.4	0
+89	1435	0.5	0
+89	1435	0.6	0
+89	1435	0.7	0
+89	1435	0.8	0
+89	1435	0.9	0
+89	1435	1	0
+89	1435	1.1	0
+89	1435	1.2	0
+89	1435	1.3	0
+89	1435	1.4	0
+89	1435	1.5	0
+89	1435	1.6	0
+89	1435	1.7	0
+89	1435	1.8	0
+89	1435	1.9	0
+89	1435	2	0
+89	1435	2.1	0
+89	1435	2.2	0
+89	1435	2.3	0
+89	1435	2.4	0
+89	1435	2.5	0
+89	1435	2.6	0
+89	1435	2.7	0
+89	1435	2.8	0
+89	1435	2.9	0
+89	1435	3	0
+89	1435	3.1	0
+89	1435	3.2	0
+89	1435	3.3	0
+89	1435	3.4	0
+89	1435	3.5	0
+89	1435	3.6	0
+89	1435	3.7	0
+89	1435	3.8	0
+89	1435	3.9	0
+89	1435	4	0
+89	1435	4.1	0
+89	1435	4.2	0
+89	1435	4.3	0
+89	1435	4.4	0
+89	1435	4.5	0
+89	1435	4.6	0
+89	1435	4.7	0
+89	1435	4.8	0
+89	1435	4.9	0
+89	1435	5	0
+89	1435	5.1	0
+89	1435	5.2	0
+89	1435	5.3	0
+89	1435	5.4	0
+89	1435	5.5	0
+89	1435	5.6	0
+89	1435	5.7	0
+89	1435	5.8	0
+89	1435	5.9	0
+89	1435	6	0
+89	1435	6.1	0
+89	1435	6.2	0
+89	1435	6.3	0
+89	1435	6.4	0
+89	1435	6.5	0
+89	1435	6.6	0
+89	1435	6.7	0
+89	1435	6.8	0
+89	1435	6.9	0
+89	1435	7	0
+89	1435	7.1	0
+89	1435	7.2	0
+89	1435	7.3	0
+89	1435	7.4	0
+89	1435	7.5	0
+89	1435	7.6	0
+89	1435	7.7	0
+89	1435	7.8	0
+89	1435	7.9	0
+89	1435	8	0
+89	1435	8.1	0
+89	1435	8.2	0
+89	1435	8.3	0
+89	1435	8.4	0
+89	1435	8.5	0
+89	1435	8.6	0
+89	1435	8.7	0
+89	1435	8.8	0
+89	1435	8.9	0
+89	1435	9	0
+89	1435	9.1	0
+89	1435	9.2	0
+89	1435	9.3	0
+89	1435	9.4	0
+89	1435	9.5	0
+89	1435	9.6	0
+89	1435	9.7	0
+89	1435	9.8	0
+89	1435	9.9	0
+89	1435	10	0
+90	1435	0.1	0
+90	1435	0.2	0
+90	1435	0.3	0
+90	1435	0.4	0
+90	1435	0.5	0
+90	1435	0.6	0
+90	1435	0.7	0
+90	1435	0.8	0
+90	1435	0.9	0
+90	1435	1	0
+90	1435	1.1	0
+90	1435	1.2	0
+90	1435	1.3	0
+90	1435	1.4	0
+90	1435	1.5	0
+90	1435	1.6	0
+90	1435	1.7	0
+90	1435	1.8	0
+90	1435	1.9	0
+90	1435	2	0
+90	1435	2.1	0
+90	1435	2.2	0
+90	1435	2.3	0
+90	1435	2.4	0
+90	1435	2.5	0
+90	1435	2.6	0
+90	1435	2.7	0
+90	1435	2.8	0
+90	1435	2.9	0
+90	1435	3	0
+90	1435	3.1	0
+90	1435	3.2	0
+90	1435	3.3	0
+90	1435	3.4	0
+90	1435	3.5	0
+90	1435	3.6	0
+90	1435	3.7	0
+90	1435	3.8	0
+90	1435	3.9	0
+90	1435	4	0
+90	1435	4.1	0
+90	1435	4.2	0
+90	1435	4.3	0
+90	1435	4.4	0
+90	1435	4.5	0
+90	1435	4.6	0
+90	1435	4.7	0
+90	1435	4.8	0
+90	1435	4.9	0
+90	1435	5	0
+90	1435	5.1	0
+90	1435	5.2	0
+90	1435	5.3	0
+90	1435	5.4	0
+90	1435	5.5	0
+90	1435	5.6	0
+90	1435	5.7	0
+90	1435	5.8	0
+90	1435	5.9	0
+90	1435	6	0
+90	1435	6.1	0
+90	1435	6.2	0
+90	1435	6.3	0
+90	1435	6.4	0
+90	1435	6.5	0
+90	1435	6.6	0
+90	1435	6.7	0
+90	1435	6.8	0
+90	1435	6.9	0
+90	1435	7	0
+90	1435	7.1	0
+90	1435	7.2	0
+90	1435	7.3	0
+90	1435	7.4	0
+90	1435	7.5	0
+90	1435	7.6	0
+90	1435	7.7	0
+90	1435	7.8	0
+90	1435	7.9	0
+90	1435	8	0
+90	1435	8.1	0
+90	1435	8.2	0
+90	1435	8.3	0
+90	1435	8.4	0
+90	1435	8.5	0
+90	1435	8.6	0
+90	1435	8.7	0
+90	1435	8.8	0
+90	1435	8.9	0
+90	1435	9	0
+90	1435	9.1	0
+90	1435	9.2	0
+90	1435	9.3	0
+90	1435	9.4	0
+90	1435	9.5	0
+90	1435	9.6	0
+90	1435	9.7	0
+90	1435	9.8	0
+90	1435	9.9	0
+90	1435	10	0
+92	0	0	0
+92	0	0	0
+94	0	0	0
+94	0	0	0
+95	0	0	0
+95	0	0	0
+95	14	0.200001574649	0
+95	14	0.200001574649	0
+95	17	0.200119574649	0
+95	17	0.200119574649	0
+95	24	0.200129574649	0
+95	24	0.200129574649	0
+95	29	0.200163574649	0
+95	29	0.200163574649	0
+95	43	0.400001574649	0
+95	43	0.400001574649	0
+95	46	0.400119574649	0
+95	46	0.400119574649	0
+95	53	0.400129574649	0
+95	53	0.400129574649	0
+95	58	0.400163574649	0
+95	58	0.400163574649	0
+95	72	0.600001574649	0
+95	72	0.600001574649	0
+95	75	0.600119574649	0
+95	75	0.600119574649	0
+95	82	0.600129574649	0
+95	82	0.600129574649	0
+95	87	0.600163574649	0
+95	87	0.600163574649	0
+95	101	0.800001574649	0
+95	101	0.800001574649	0
+95	104	0.800119574649	0
+95	104	0.800119574649	0
+95	111	0.800129574649	0
+95	111	0.800129574649	0
+95	116	0.800163574649	0
+95	116	0.800163574649	0
+95	130	1.000001574649	0
+95	130	1.000001574649	0
+95	133	1.000119574649	0
+95	133	1.000119574649	0
+95	140	1.000129574649	0
+95	140	1.000129574649	0
+95	145	1.000163574649	0
+95	145	1.000163574649	0
+95	159	1.200001574649	0
+95	159	1.200001574649	0
+95	162	1.200119574649	0
+95	162	1.200119574649	0
+95	169	1.200129574649	0
+95	169	1.200129574649	0
+95	174	1.200163574649	0
+95	174	1.200163574649	0
+95	188	1.400001574649	0
+95	188	1.400001574649	0
+95	191	1.400119574649	0
+95	191	1.400119574649	0
+95	198	1.400129574649	0
+95	198	1.400129574649	0
+95	203	1.400163574649	0
+95	203	1.400163574649	0
+95	217	1.600001574649	0
+95	217	1.600001574649	0
+95	220	1.600119574649	0
+95	220	1.600119574649	0
+95	227	1.600129574649	0
+95	227	1.600129574649	0
+95	232	1.600163574649	0
+95	232	1.600163574649	0
+95	246	1.800001574649	0
+95	246	1.800001574649	0
+95	249	1.800119574649	0
+95	249	1.800119574649	0
+95	256	1.800129574649	0
+95	256	1.800129574649	0
+95	261	1.800163574649	0
+95	261	1.800163574649	0
+95	275	2.000001574649	0
+95	275	2.000001574649	0
+95	278	2.000119574649	0
+95	278	2.000119574649	0
+95	285	2.000129574649	0
+95	285	2.000129574649	0
+95	290	2.000163574649	0
+95	290	2.000163574649	0
+95	304	2.200001574649	0
+95	304	2.200001574649	0
+95	307	2.200119574649	0
+95	307	2.200119574649	0
+95	314	2.200129574649	0
+95	314	2.200129574649	0
+95	319	2.200163574649	0
+95	319	2.200163574649	0
+95	333	2.400001574649	0
+95	333	2.400001574649	0
+95	336	2.400119574649	0
+95	336	2.400119574649	0
+95	343	2.400129574649	0
+95	343	2.400129574649	0
+95	348	2.400163574649	0
+95	348	2.400163574649	0
+95	362	2.600001574649	0
+95	362	2.600001574649	0
+95	365	2.600119574649	0
+95	365	2.600119574649	0
+95	372	2.600129574649	0
+95	372	2.600129574649	0
+95	377	2.600163574649	0
+95	377	2.600163574649	0
+95	391	2.800001574649	0
+95	391	2.800001574649	0
+95	394	2.800119574649	0
+95	394	2.800119574649	0
+95	401	2.800129574649	0
+95	401	2.800129574649	0
+95	406	2.800163574649	0
+95	406	2.800163574649	0
+95	420	3.000001574649	0
+95	420	3.000001574649	0
+95	423	3.000119574649	0
+95	423	3.000119574649	0
+95	430	3.000129574649	0
+95	430	3.000129574649	0
+95	435	3.000163574649	0
+95	435	3.000163574649	0
+95	449	3.200001574649	0
+95	449	3.200001574649	0
+95	452	3.200119574649	0
+95	452	3.200119574649	0
+95	459	3.200129574649	0
+95	459	3.200129574649	0
+95	464	3.200163574649	0
+95	464	3.200163574649	0
+95	478	3.400001574649	0
+95	478	3.400001574649	0
+95	481	3.400119574649	0
+95	481	3.400119574649	0
+95	488	3.400129574649	0
+95	488	3.400129574649	0
+95	493	3.400163574649	0
+95	493	3.400163574649	0
+95	507	3.600001574649	0
+95	507	3.600001574649	0
+95	510	3.600119574649	0
+95	510	3.600119574649	0
+95	517	3.600129574649	0
+95	517	3.600129574649	0
+95	522	3.600163574649	0
+95	522	3.600163574649	0
+95	536	3.800001574649	0
+95	536	3.800001574649	0
+95	539	3.800119574649	0
+95	539	3.800119574649	0
+95	546	3.800129574649	0
+95	546	3.800129574649	0
+95	551	3.800163574649	0
+95	551	3.800163574649	0
+95	565	4.000001574649	0
+95	565	4.000001574649	0
+95	568	4.000119574649	0
+95	568	4.000119574649	0
+95	575	4.000129574649	0
+95	575	4.000129574649	0
+95	580	4.000163574649	0
+95	580	4.000163574649	0
+95	594	4.200001574649	0
+95	594	4.200001574649	0
+95	597	4.200119574649	0
+95	597	4.200119574649	0
+95	604	4.200129574649	0
+95	604	4.200129574649	0
+95	609	4.200163574649	0
+95	609	4.200163574649	0
+95	623	4.400001574649	0
+95	623	4.400001574649	0
+95	626	4.400119574649	0
+95	626	4.400119574649	0
+95	633	4.400129574649	0
+95	633	4.400129574649	0
+95	638	4.400163574649	0
+95	638	4.400163574649	0
+95	652	4.600001574649	0
+95	652	4.600001574649	0
+95	655	4.600119574649	0
+95	655	4.600119574649	0
+95	662	4.600129574649	0
+95	662	4.600129574649	0
+95	667	4.600163574649	0
+95	667	4.600163574649	0
+95	681	4.800001574649	0
+95	681	4.800001574649	0
+95	684	4.800119574649	0
+95	684	4.800119574649	0
+95	691	4.800129574649	0
+95	691	4.800129574649	0
+95	696	4.800163574649	0
+95	696	4.800163574649	0
+95	710	5.000001574649	0
+95	710	5.000001574649	0
+95	713	5.000119574649	0
+95	713	5.000119574649	0
+95	720	5.000129574649	0
+95	720	5.000129574649	0
+95	725	5.000163574649	0
+95	725	5.000163574649	0
+95	739	5.200001574649	0
+95	739	5.200001574649	0
+95	742	5.200119574649	0
+95	742	5.200119574649	0
+95	749	5.200129574649	0
+95	749	5.200129574649	0
+95	754	5.200163574649	0
+95	754	5.200163574649	0
+95	768	5.400001574649	0
+95	768	5.400001574649	0
+95	771	5.400119574649	0
+95	771	5.400119574649	0
+95	778	5.400129574649	0
+95	778	5.400129574649	0
+95	783	5.400163574649	0
+95	783	5.400163574649	0
+95	797	5.600001574649	0
+95	797	5.600001574649	0
+95	800	5.600119574649	0
+95	800	5.600119574649	0
+95	807	5.600129574649	0
+95	807	5.600129574649	0
+95	812	5.600163574649	0
+95	812	5.600163574649	0
+95	826	5.800001574649	0
+95	826	5.800001574649	0
+95	829	5.800119574649	0
+95	829	5.800119574649	0
+95	836	5.800129574649	0
+95	836	5.800129574649	0
+95	841	5.800163574649	0
+95	841	5.800163574649	0
+95	855	6.000001574649	0
+95	855	6.000001574649	0
+95	858	6.000119574649	0
+95	858	6.000119574649	0
+95	865	6.000129574649	0
+95	865	6.000129574649	0
+95	870	6.000163574649	0
+95	870	6.000163574649	0
+95	884	6.200001574649	0
+95	884	6.200001574649	0
+95	887	6.200119574649	0
+95	887	6.200119574649	0
+95	894	6.200129574649	0
+95	894	6.200129574649	0
+95	899	6.200163574649	0
+95	899	6.200163574649	0
+95	913	6.400001574649	0
+95	913	6.400001574649	0
+95	916	6.400119574649	0
+95	916	6.400119574649	0
+95	923	6.400129574649	0
+95	923	6.400129574649	0
+95	928	6.400163574649	0
+95	928	6.400163574649	0
+95	942	6.600001574649	0
+95	942	6.600001574649	0
+95	945	6.600119574649	0
+95	945	6.600119574649	0
+95	952	6.600129574649	0
+95	952	6.600129574649	0
+95	957	6.600163574649	0
+95	957	6.600163574649	0
+95	971	6.800001574649	0
+95	971	6.800001574649	0
+95	974	6.800119574649	0
+95	974	6.800119574649	0
+95	981	6.800129574649	0
+95	981	6.800129574649	0
+95	986	6.800163574649	0
+95	986	6.800163574649	0
+95	1000	7.000001574649	0
+95	1000	7.000001574649	0
+95	1003	7.000119574649	0
+95	1003	7.000119574649	0
+95	1010	7.000129574649	0
+95	1010	7.000129574649	0
+95	1015	7.000163574649	0
+95	1015	7.000163574649	0
+95	1029	7.200001574649	0
+95	1029	7.200001574649	0
+95	1032	7.200119574649	0
+95	1032	7.200119574649	0
+95	1039	7.200129574649	0
+95	1039	7.200129574649	0
+95	1044	7.200163574649	0
+95	1044	7.200163574649	0
+95	1058	7.400001574649	0
+95	1058	7.400001574649	0
+95	1061	7.400119574649	0
+95	1061	7.400119574649	0
+95	1068	7.400129574649	0
+95	1068	7.400129574649	0
+95	1073	7.400163574649	0
+95	1073	7.400163574649	0
+95	1087	7.600001574649	0
+95	1087	7.600001574649	0
+95	1090	7.600119574649	0
+95	1090	7.600119574649	0
+95	1097	7.600129574649	0
+95	1097	7.600129574649	0
+95	1102	7.600163574649	0
+95	1102	7.600163574649	0
+95	1116	7.800001574649	0
+95	1116	7.800001574649	0
+95	1119	7.800119574649	0
+95	1119	7.800119574649	0
+95	1126	7.800129574649	0
+95	1126	7.800129574649	0
+95	1131	7.800163574649	0
+95	1131	7.800163574649	0
+95	1145	8.000001574649	0
+95	1145	8.000001574649	0
+95	1148	8.000119574649	0
+95	1148	8.000119574649	0
+95	1155	8.000129574649	0
+95	1155	8.000129574649	0
+95	1160	8.000163574649	0
+95	1160	8.000163574649	0
+95	1174	8.200001574649	0
+95	1174	8.200001574649	0
+95	1177	8.200119574649	0
+95	1177	8.200119574649	0
+95	1184	8.200129574649	0
+95	1184	8.200129574649	0
+95	1189	8.200163574649	0
+95	1189	8.200163574649	0
+95	1203	8.400001574649	0
+95	1203	8.400001574649	0
+95	1206	8.400119574649	0
+95	1206	8.400119574649	0
+95	1213	8.400129574649	0
+95	1213	8.400129574649	0
+95	1218	8.400163574649	0
+95	1218	8.400163574649	0
+95	1232	8.600001574649	0
+95	1232	8.600001574649	0
+95	1235	8.600119574649	0
+95	1235	8.600119574649	0
+95	1242	8.600129574649	0
+95	1242	8.600129574649	0
+95	1247	8.600163574649	0
+95	1247	8.600163574649	0
+95	1261	8.800001574649	0
+95	1261	8.800001574649	0
+95	1264	8.800119574649	0
+95	1264	8.800119574649	0
+95	1271	8.800129574649	0
+95	1271	8.800129574649	0
+95	1276	8.800163574649	0
+95	1276	8.800163574649	0
+95	1290	9.000001574649	0
+95	1290	9.000001574649	0
+95	1293	9.000119574649	0
+95	1293	9.000119574649	0
+95	1300	9.000129574649	0
+95	1300	9.000129574649	0
+95	1305	9.000163574649	0
+95	1305	9.000163574649	0
+95	1319	9.200001574649	0
+95	1319	9.200001574649	0
+95	1322	9.200119574649	0
+95	1322	9.200119574649	0
+95	1329	9.200129574649	0
+95	1329	9.200129574649	0
+95	1334	9.200163574649	0
+95	1334	9.200163574649	0
+95	1348	9.400001574649	0
+95	1348	9.400001574649	0
+95	1351	9.400119574649	0
+95	1351	9.400119574649	0
+95	1358	9.400129574649	0
+95	1358	9.400129574649	0
+95	1363	9.400163574649	0
+95	1363	9.400163574649	0
+95	1377	9.600001574649	0
+95	1377	9.600001574649	0
+95	1380	9.600119574649	0
+95	1380	9.600119574649	0
+95	1387	9.600129574649	0
+95	1387	9.600129574649	0
+95	1392	9.600163574649	0
+95	1392	9.600163574649	0
+95	1406	9.800001574649	0
+95	1406	9.800001574649	0
+95	1409	9.800119574649	0
+95	1409	9.800119574649	0
+95	1416	9.800129574649	0
+95	1416	9.800129574649	0
+95	1421	9.800163574649	0
+95	1421	9.800163574649	0
+97	0	0	31
+98	28	0.200163574649	14
+98	57	0.400163574649	14
+98	86	0.600163574649	14
+98	115	0.800163574649	14
+98	144	1.000163574649	14
+98	173	1.200163574649	14
+98	202	1.400163574649	14
+98	231	1.600163574649	14
+98	260	1.800163574649	14
+98	289	2.000163574649	14
+98	318	2.200163574649	14
+98	347	2.400163574649	14
+98	376	2.600163574649	14
+98	405	2.800163574649	14
+98	434	3.000163574649	14
+98	463	3.200163574649	14
+98	492	3.400163574649	14
+98	521	3.600163574649	14
+98	550	3.800163574649	14
+98	579	4.000163574649	14
+98	608	4.200163574649	14
+98	637	4.400163574649	14
+98	666	4.600163574649	14
+98	695	4.800163574649	14
+98	724	5.000163574649	14
+98	753	5.200163574649	14
+98	782	5.400163574649	14
+98	811	5.600163574649	14
+98	840	5.800163574649	14
+98	869	6.000163574649	14
+98	898	6.200163574649	14
+98	927	6.400163574649	14
+98	956	6.600163574649	14
+98	985	6.800163574649	14
+98	1014	7.000163574649	14
+98	1043	7.200163574649	14
+98	1072	7.400163574649	14
+98	1101	7.600163574649	14
+98	1130	7.800163574649	14
+98	1159	8.000163574649	14
+98	1188	8.200163574649	14
+98	1217	8.400163574649	14
+98	1246	8.600163574649	14
+98	1275	8.800163574649	14
+98	1304	9.000163574649	14
+98	1333	9.200163574649	14
+98	1362	9.400163574649	14
+98	1391	9.600163574649	14
+98	1420	9.800163574649	14
+99	28	0.200163574649	14
+99	57	0.400163574649	14
+99	86	0.600163574649	14
+99	115	0.800163574649	14
+99	144	1.000163574649	14
+99	173	1.200163574649	14
+99	202	1.400163574649	14
+99	231	1.600163574649	14
+99	260	1.800163574649	14
+99	289	2.000163574649	14
+99	318	2.200163574649	14
+99	347	2.400163574649	14
+99	376	2.600163574649	14
+99	405	2.800163574649	14
+99	434	3.000163574649	14
+99	463	3.200163574649	14
+99	492	3.400163574649	14
+99	521	3.600163574649	14
+99	550	3.800163574649	14
+99	579	4.000163574649	14
+99	608	4.200163574649	14
+99	637	4.400163574649	14
+99	666	4.600163574649	14
+99	695	4.800163574649	14
+99	724	5.000163574649	14
+99	753	5.200163574649	14
+99	782	5.400163574649	14
+99	811	5.600163574649	14
+99	840	5.800163574649	14
+99	869	6.000163574649	14
+99	898	6.200163574649	14
+99	927	6.400163574649	14
+99	956	6.600163574649	14
+99	985	6.800163574649	14
+99	1014	7.000163574649	14
+99	1043	7.200163574649	14
+99	1072	7.400163574649	14
+99	1101	7.600163574649	14
+99	1130	7.800163574649	14
+99	1159	8.000163574649	14
+99	1188	8.200163574649	14
+99	1217	8.400163574649	14
+99	1246	8.600163574649	14
+99	1275	8.800163574649	14
+99	1304	9.000163574649	14
+99	1333	9.200163574649	14
+99	1362	9.400163574649	14
+99	1391	9.600163574649	14
+99	1420	9.800163574649	14
+103	28	0.200163574649	14
+103	57	0.400163574649	14
+103	86	0.600163574649	14
+103	115	0.800163574649	14
+103	144	1.000163574649	14
+103	173	1.200163574649	14
+103	202	1.400163574649	14
+103	231	1.600163574649	14
+103	260	1.800163574649	14
+103	289	2.000163574649	14
+103	318	2.200163574649	14
+103	347	2.400163574649	14
+103	376	2.600163574649	14
+103	405	2.800163574649	14
+103	434	3.000163574649	14
+103	463	3.200163574649	14
+103	492	3.400163574649	14
+103	521	3.600163574649	14
+103	550	3.800163574649	14
+103	579	4.000163574649	14
+103	608	4.200163574649	14
+103	637	4.400163574649	14
+103	666	4.600163574649	14
+103	695	4.800163574649	14
+103	724	5.000163574649	14
+103	753	5.200163574649	14
+103	782	5.400163574649	14
+103	811	5.600163574649	14
+103	840	5.800163574649	14
+103	869	6.000163574649	14
+103	898	6.200163574649	14
+103	927	6.400163574649	14
+103	956	6.600163574649	14
+103	985	6.800163574649	14
+103	1014	7.000163574649	14
+103	1043	7.200163574649	14
+103	1072	7.400163574649	14
+103	1101	7.600163574649	14
+103	1130	7.800163574649	14
+103	1159	8.000163574649	14
+103	1188	8.200163574649	14
+103	1217	8.400163574649	14
+103	1246	8.600163574649	14
+103	1275	8.800163574649	14
+103	1304	9.000163574649	14
+103	1333	9.200163574649	14
+103	1362	9.400163574649	14
+103	1391	9.600163574649	14
+103	1420	9.800163574649	14
+104	18	0.200119574649	264
+104	47	0.400119574649	264
+104	76	0.600119574649	264
+104	105	0.800119574649	264
+104	134	1.000119574649	264
+104	163	1.200119574649	264
+104	192	1.400119574649	264
+104	221	1.600119574649	264
+104	250	1.800119574649	264
+104	279	2.000119574649	264
+104	308	2.200119574649	264
+104	337	2.400119574649	264
+104	366	2.600119574649	264
+104	395	2.800119574649	264
+104	424	3.000119574649	264
+104	453	3.200119574649	264
+104	482	3.400119574649	264
+104	511	3.600119574649	264
+104	540	3.800119574649	264
+104	569	4.000119574649	264
+104	598	4.200119574649	264
+104	627	4.400119574649	264
+104	656	4.600119574649	264
+104	685	4.800119574649	264
+104	714	5.000119574649	264
+104	743	5.200119574649	264
+104	772	5.400119574649	264
+104	801	5.600119574649	264
+104	830	5.800119574649	264
+104	859	6.000119574649	264
+104	888	6.200119574649	264
+104	917	6.400119574649	264
+104	946	6.600119574649	264
+104	975	6.800119574649	264
+104	1004	7.000119574649	264
+104	1033	7.200119574649	264
+104	1062	7.400119574649	264
+104	1091	7.600119574649	264
+104	1120	7.800119574649	264
+104	1149	8.000119574649	264
+104	1178	8.200119574649	264
+104	1207	8.400119574649	264
+104	1236	8.600119574649	264
+104	1265	8.800119574649	264
+104	1294	9.000119574649	264
+104	1323	9.200119574649	264
+104	1352	9.400119574649	264
+104	1381	9.600119574649	264
+104	1410	9.800119574649	264
+105	18	0.200119574649	264
+105	47	0.400119574649	264
+105	76	0.600119574649	264
+105	105	0.800119574649	264
+105	134	1.000119574649	264
+105	163	1.200119574649	264
+105	192	1.400119574649	264
+105	221	1.600119574649	264
+105	250	1.800119574649	264
+105	279	2.000119574649	264
+105	308	2.200119574649	264
+105	337	2.400119574649	264
+105	366	2.600119574649	264
+105	395	2.800119574649	264
+105	424	3.000119574649	264
+105	453	3.200119574649	264
+105	482	3.400119574649	264
+105	511	3.600119574649	264
+105	540	3.800119574649	264
+105	569	4.000119574649	264
+105	598	4.200119574649	264
+105	627	4.400119574649	264
+105	656	4.600119574649	264
+105	685	4.800119574649	264
+105	714	5.000119574649	264
+105	743	5.200119574649	264
+105	772	5.400119574649	264
+105	801	5.600119574649	264
+105	830	5.800119574649	264
+105	859	6.000119574649	264
+105	888	6.200119574649	264
+105	917	6.400119574649	264
+105	946	6.600119574649	264
+105	975	6.800119574649	264
+105	1004	7.000119574649	264
+105	1033	7.200119574649	264
+105	1062	7.400119574649	264
+105	1091	7.600119574649	264
+105	1120	7.800119574649	264
+105	1149	8.000119574649	264
+105	1178	8.200119574649	264
+105	1207	8.400119574649	264
+105	1236	8.600119574649	264
+105	1265	8.800119574649	264
+105	1294	9.000119574649	264
+105	1323	9.200119574649	264
+105	1352	9.400119574649	264
+105	1381	9.600119574649	264
+105	1410	9.800119574649	264
+109	18	0.200119574649	264
+109	47	0.400119574649	264
+109	76	0.600119574649	264
+109	105	0.800119574649	264
+109	134	1.000119574649	264
+109	163	1.200119574649	264
+109	192	1.400119574649	264
+109	221	1.600119574649	264
+109	250	1.800119574649	264
+109	279	2.000119574649	264
+109	308	2.200119574649	264
+109	337	2.400119574649	264
+109	366	2.600119574649	264
+109	395	2.800119574649	264
+109	424	3.000119574649	264
+109	453	3.200119574649	264
+109	482	3.400119574649	264
+109	511	3.600119574649	264
+109	540	3.800119574649	264
+109	569	4.000119574649	264
+109	598	4.200119574649	264
+109	627	4.400119574649	264
+109	656	4.600119574649	264
+109	685	4.800119574649	264
+109	714	5.000119574649	264
+109	743	5.200119574649	264
+109	772	5.400119574649	264
+109	801	5.600119574649	264
+109	830	5.800119574649	264
+109	859	6.000119574649	264
+109	888	6.200119574649	264
+109	917	6.400119574649	264
+109	946	6.600119574649	264
+109	975	6.800119574649	264
+109	1004	7.000119574649	264
+109	1033	7.200119574649	264
+109	1062	7.400119574649	264
+109	1091	7.600119574649	264
+109	1120	7.800119574649	264
+109	1149	8.000119574649	264
+109	1178	8.200119574649	264
+109	1207	8.400119574649	264
+109	1236	8.600119574649	264
+109	1265	8.800119574649	264
+109	1294	9.000119574649	264
+109	1323	9.200119574649	264
+109	1352	9.400119574649	264
+109	1381	9.600119574649	264
+109	1410	9.800119574649	264
+114	0	0	0
+114	0	0	0
+115	18	0.200119574649	2.4e+07
+115	47	0.400119574649	2.4e+07
+115	76	0.600119574649	2.4e+07
+115	105	0.800119574649	2.4e+07
+115	134	1.000119574649	2.4e+07
+115	163	1.200119574649	2.4e+07
+115	192	1.400119574649	2.4e+07
+115	221	1.600119574649	2.4e+07
+115	250	1.800119574649	2.4e+07
+115	279	2.000119574649	2.4e+07
+115	308	2.200119574649	2.4e+07
+115	337	2.400119574649	2.4e+07
+115	366	2.600119574649	2.4e+07
+115	395	2.800119574649	2.4e+07
+115	424	3.000119574649	2.4e+07
+115	453	3.200119574649	2.4e+07
+115	482	3.400119574649	2.4e+07
+115	511	3.600119574649	2.4e+07
+115	540	3.800119574649	2.4e+07
+115	569	4.000119574649	2.4e+07
+115	598	4.200119574649	2.4e+07
+115	627	4.400119574649	2.4e+07
+115	656	4.600119574649	2.4e+07
+115	685	4.800119574649	2.4e+07
+115	714	5.000119574649	2.4e+07
+115	743	5.200119574649	2.4e+07
+115	772	5.400119574649	2.4e+07
+115	801	5.600119574649	2.4e+07
+115	830	5.800119574649	2.4e+07
+115	859	6.000119574649	2.4e+07
+115	888	6.200119574649	2.4e+07
+115	917	6.400119574649	2.4e+07
+115	946	6.600119574649	2.4e+07
+115	975	6.800119574649	2.4e+07
+115	1004	7.000119574649	2.4e+07
+115	1033	7.200119574649	2.4e+07
+115	1062	7.400119574649	2.4e+07
+115	1091	7.600119574649	2.4e+07
+115	1120	7.800119574649	2.4e+07
+115	1149	8.000119574649	2.4e+07
+115	1178	8.200119574649	2.4e+07
+115	1207	8.400119574649	2.4e+07
+115	1236	8.600119574649	2.4e+07
+115	1265	8.800119574649	2.4e+07
+115	1294	9.000119574649	2.4e+07
+115	1323	9.200119574649	2.4e+07
+115	1352	9.400119574649	2.4e+07
+115	1381	9.600119574649	2.4e+07
+115	1410	9.800119574649	2.4e+07
+117	18	0.200119574649	236
+117	47	0.400119574649	236
+117	76	0.600119574649	236
+117	105	0.800119574649	236
+117	134	1.000119574649	236
+117	163	1.200119574649	236
+117	192	1.400119574649	236
+117	221	1.600119574649	236
+117	250	1.800119574649	236
+117	279	2.000119574649	236
+117	308	2.200119574649	236
+117	337	2.400119574649	236
+117	366	2.600119574649	236
+117	395	2.800119574649	236
+117	424	3.000119574649	236
+117	453	3.200119574649	236
+117	482	3.400119574649	236
+117	511	3.600119574649	236
+117	540	3.800119574649	236
+117	569	4.000119574649	236
+117	598	4.200119574649	236
+117	627	4.400119574649	236
+117	656	4.600119574649	236
+117	685	4.800119574649	236
+117	714	5.000119574649	236
+117	743	5.200119574649	236
+117	772	5.400119574649	236
+117	801	5.600119574649	236
+117	830	5.800119574649	236
+117	859	6.000119574649	236
+117	888	6.200119574649	236
+117	917	6.400119574649	236
+117	946	6.600119574649	236
+117	975	6.800119574649	236
+117	1004	7.000119574649	236
+117	1033	7.200119574649	236
+117	1062	7.400119574649	236
+117	1091	7.600119574649	236
+117	1120	7.800119574649	236
+117	1149	8.000119574649	236
+117	1178	8.200119574649	236
+117	1207	8.400119574649	236
+117	1236	8.600119574649	236
+117	1265	8.800119574649	236
+117	1294	9.000119574649	236
+117	1323	9.200119574649	236
+117	1352	9.400119574649	236
+117	1381	9.600119574649	236
+117	1410	9.800119574649	236
+118	23	0.200129574649	14
+118	52	0.400129574649	14
+118	81	0.600129574649	14
+118	110	0.800129574649	14
+118	139	1.000129574649	14
+118	168	1.200129574649	14
+118	197	1.400129574649	14
+118	226	1.600129574649	14
+118	255	1.800129574649	14
+118	284	2.000129574649	14
+118	313	2.200129574649	14
+118	342	2.400129574649	14
+118	371	2.600129574649	14
+118	400	2.800129574649	14
+118	429	3.000129574649	14
+118	458	3.200129574649	14
+118	487	3.400129574649	14
+118	516	3.600129574649	14
+118	545	3.800129574649	14
+118	574	4.000129574649	14
+118	603	4.200129574649	14
+118	632	4.400129574649	14
+118	661	4.600129574649	14
+118	690	4.800129574649	14
+118	719	5.000129574649	14
+118	748	5.200129574649	14
+118	777	5.400129574649	14
+118	806	5.600129574649	14
+118	835	5.800129574649	14
+118	864	6.000129574649	14
+118	893	6.200129574649	14
+118	922	6.400129574649	14
+118	951	6.600129574649	14
+118	980	6.800129574649	14
+118	1009	7.000129574649	14
+118	1038	7.200129574649	14
+118	1067	7.400129574649	14
+118	1096	7.600129574649	14
+118	1125	7.800129574649	14
+118	1154	8.000129574649	14
+118	1183	8.200129574649	14
+118	1212	8.400129574649	14
+118	1241	8.600129574649	14
+118	1270	8.800129574649	14
+118	1299	9.000129574649	14
+118	1328	9.200129574649	14
+118	1357	9.400129574649	14
+118	1386	9.600129574649	14
+118	1415	9.800129574649	14
+120	18	0.200119574649	264
+120	47	0.400119574649	264
+120	76	0.600119574649	264
+120	105	0.800119574649	264
+120	134	1.000119574649	264
+120	163	1.200119574649	264
+120	192	1.400119574649	264
+120	221	1.600119574649	264
+120	250	1.800119574649	264
+120	279	2.000119574649	264
+120	308	2.200119574649	264
+120	337	2.400119574649	264
+120	366	2.600119574649	264
+120	395	2.800119574649	264
+120	424	3.000119574649	264
+120	453	3.200119574649	264
+120	482	3.400119574649	264
+120	511	3.600119574649	264
+120	540	3.800119574649	264
+120	569	4.000119574649	264
+120	598	4.200119574649	264
+120	627	4.400119574649	264
+120	656	4.600119574649	264
+120	685	4.800119574649	264
+120	714	5.000119574649	264
+120	743	5.200119574649	264
+120	772	5.400119574649	264
+120	801	5.600119574649	264
+120	830	5.800119574649	264
+120	859	6.000119574649	264
+120	888	6.200119574649	264
+120	917	6.400119574649	264
+120	946	6.600119574649	264
+120	975	6.800119574649	264
+120	1004	7.000119574649	264
+120	1033	7.200119574649	264
+120	1062	7.400119574649	264
+120	1091	7.600119574649	264
+120	1120	7.800119574649	264
+120	1149	8.000119574649	264
+120	1178	8.200119574649	264
+120	1207	8.400119574649	264
+120	1236	8.600119574649	264
+120	1265	8.800119574649	264
+120	1294	9.000119574649	264
+120	1323	9.200119574649	264
+120	1352	9.400119574649	264
+120	1381	9.600119574649	264
+120	1410	9.800119574649	264
+128	0	0	0
+128	0	0	0
+128	0	0	2
+128	24	0.200129574649	3
+128	29	0.200163574649	2
+128	53	0.400129574649	3
+128	58	0.400163574649	2
+128	82	0.600129574649	3
+128	87	0.600163574649	2
+128	111	0.800129574649	3
+128	116	0.800163574649	2
+128	140	1.000129574649	3
+128	145	1.000163574649	2
+128	169	1.200129574649	3
+128	174	1.200163574649	2
+128	198	1.400129574649	3
+128	203	1.400163574649	2
+128	227	1.600129574649	3
+128	232	1.600163574649	2
+128	256	1.800129574649	3
+128	261	1.800163574649	2
+128	285	2.000129574649	3
+128	290	2.000163574649	2
+128	314	2.200129574649	3
+128	319	2.200163574649	2
+128	343	2.400129574649	3
+128	348	2.400163574649	2
+128	372	2.600129574649	3
+128	377	2.600163574649	2
+128	401	2.800129574649	3
+128	406	2.800163574649	2
+128	430	3.000129574649	3
+128	435	3.000163574649	2
+128	459	3.200129574649	3
+128	464	3.200163574649	2
+128	488	3.400129574649	3
+128	493	3.400163574649	2
+128	517	3.600129574649	3
+128	522	3.600163574649	2
+128	546	3.800129574649	3
+128	551	3.800163574649	2
+128	575	4.000129574649	3
+128	580	4.000163574649	2
+128	604	4.200129574649	3
+128	609	4.200163574649	2
+128	633	4.400129574649	3
+128	638	4.400163574649	2
+128	662	4.600129574649	3
+128	667	4.600163574649	2
+128	691	4.800129574649	3
+128	696	4.800163574649	2
+128	720	5.000129574649	3
+128	725	5.000163574649	2
+128	749	5.200129574649	3
+128	754	5.200163574649	2
+128	778	5.400129574649	3
+128	783	5.400163574649	2
+128	807	5.600129574649	3
+128	812	5.600163574649	2
+128	836	5.800129574649	3
+128	841	5.800163574649	2
+128	865	6.000129574649	3
+128	870	6.000163574649	2
+128	894	6.200129574649	3
+128	899	6.200163574649	2
+128	923	6.400129574649	3
+128	928	6.400163574649	2
+128	952	6.600129574649	3
+128	957	6.600163574649	2
+128	981	6.800129574649	3
+128	986	6.800163574649	2
+128	1010	7.000129574649	3
+128	1015	7.000163574649	2
+128	1039	7.200129574649	3
+128	1044	7.200163574649	2
+128	1068	7.400129574649	3
+128	1073	7.400163574649	2
+128	1097	7.600129574649	3
+128	1102	7.600163574649	2
+128	1126	7.800129574649	3
+128	1131	7.800163574649	2
+128	1155	8.000129574649	3
+128	1160	8.000163574649	2
+128	1184	8.200129574649	3
+128	1189	8.200163574649	2
+128	1213	8.400129574649	3
+128	1218	8.400163574649	2
+128	1242	8.600129574649	3
+128	1247	8.600163574649	2
+128	1271	8.800129574649	3
+128	1276	8.800163574649	2
+128	1300	9.000129574649	3
+128	1305	9.000163574649	2
+128	1329	9.200129574649	3
+128	1334	9.200163574649	2
+128	1358	9.400129574649	3
+128	1363	9.400163574649	2
+128	1387	9.600129574649	3
+128	1392	9.600163574649	2
+128	1416	9.800129574649	3
+128	1421	9.800163574649	2
+129	0	0	1
+129	14	0.200001574649	3
+129	17	0.200119574649	1
+129	24	0.200129574649	0
+129	29	0.200163574649	1
+129	43	0.400001574649	3
+129	46	0.400119574649	1
+129	53	0.400129574649	0
+129	58	0.400163574649	1
+129	72	0.600001574649	3
+129	75	0.600119574649	1
+129	82	0.600129574649	0
+129	87	0.600163574649	1
+129	101	0.800001574649	3
+129	104	0.800119574649	1
+129	111	0.800129574649	0
+129	116	0.800163574649	1
+129	130	1.000001574649	3
+129	133	1.000119574649	1
+129	140	1.000129574649	0
+129	145	1.000163574649	1
+129	159	1.200001574649	3
+129	162	1.200119574649	1
+129	169	1.200129574649	0
+129	174	1.200163574649	1
+129	188	1.400001574649	3
+129	191	1.400119574649	1
+129	198	1.400129574649	0
+129	203	1.400163574649	1
+129	217	1.600001574649	3
+129	220	1.600119574649	1
+129	227	1.600129574649	0
+129	232	1.600163574649	1
+129	246	1.800001574649	3
+129	249	1.800119574649	1
+129	256	1.800129574649	0
+129	261	1.800163574649	1
+129	275	2.000001574649	3
+129	278	2.000119574649	1
+129	285	2.000129574649	0
+129	290	2.000163574649	1
+129	304	2.200001574649	3
+129	307	2.200119574649	1
+129	314	2.200129574649	0
+129	319	2.200163574649	1
+129	333	2.400001574649	3
+129	336	2.400119574649	1
+129	343	2.400129574649	0
+129	348	2.400163574649	1
+129	362	2.600001574649	3
+129	365	2.600119574649	1
+129	372	2.600129574649	0
+129	377	2.600163574649	1
+129	391	2.800001574649	3
+129	394	2.800119574649	1
+129	401	2.800129574649	0
+129	406	2.800163574649	1
+129	420	3.000001574649	3
+129	423	3.000119574649	1
+129	430	3.000129574649	0
+129	435	3.000163574649	1
+129	449	3.200001574649	3
+129	452	3.200119574649	1
+129	459	3.200129574649	0
+129	464	3.200163574649	1
+129	478	3.400001574649	3
+129	481	3.400119574649	1
+129	488	3.400129574649	0
+129	493	3.400163574649	1
+129	507	3.600001574649	3
+129	510	3.600119574649	1
+129	517	3.600129574649	0
+129	522	3.600163574649	1
+129	536	3.800001574649	3
+129	539	3.800119574649	1
+129	546	3.800129574649	0
+129	551	3.800163574649	1
+129	565	4.000001574649	3
+129	568	4.000119574649	1
+129	575	4.000129574649	0
+129	580	4.000163574649	1
+129	594	4.200001574649	3
+129	597	4.200119574649	1
+129	604	4.200129574649	0
+129	609	4.200163574649	1
+129	623	4.400001574649	3
+129	626	4.400119574649	1
+129	633	4.400129574649	0
+129	638	4.400163574649	1
+129	652	4.600001574649	3
+129	655	4.600119574649	1
+129	662	4.600129574649	0
+129	667	4.600163574649	1
+129	681	4.800001574649	3
+129	684	4.800119574649	1
+129	691	4.800129574649	0
+129	696	4.800163574649	1
+129	710	5.000001574649	3
+129	713	5.000119574649	1
+129	720	5.000129574649	0
+129	725	5.000163574649	1
+129	739	5.200001574649	3
+129	742	5.200119574649	1
+129	749	5.200129574649	0
+129	754	5.200163574649	1
+129	768	5.400001574649	3
+129	771	5.400119574649	1
+129	778	5.400129574649	0
+129	783	5.400163574649	1
+129	797	5.600001574649	3
+129	800	5.600119574649	1
+129	807	5.600129574649	0
+129	812	5.600163574649	1
+129	826	5.800001574649	3
+129	829	5.800119574649	1
+129	836	5.800129574649	0
+129	841	5.800163574649	1
+129	855	6.000001574649	3
+129	858	6.000119574649	1
+129	865	6.000129574649	0
+129	870	6.000163574649	1
+129	884	6.200001574649	3
+129	887	6.200119574649	1
+129	894	6.200129574649	0
+129	899	6.200163574649	1
+129	913	6.400001574649	3
+129	916	6.400119574649	1
+129	923	6.400129574649	0
+129	928	6.400163574649	1
+129	942	6.600001574649	3
+129	945	6.600119574649	1
+129	952	6.600129574649	0
+129	957	6.600163574649	1
+129	971	6.800001574649	3
+129	974	6.800119574649	1
+129	981	6.800129574649	0
+129	986	6.800163574649	1
+129	1000	7.000001574649	3
+129	1003	7.000119574649	1
+129	1010	7.000129574649	0
+129	1015	7.000163574649	1
+129	1029	7.200001574649	3
+129	1032	7.200119574649	1
+129	1039	7.200129574649	0
+129	1044	7.200163574649	1
+129	1058	7.400001574649	3
+129	1061	7.400119574649	1
+129	1068	7.400129574649	0
+129	1073	7.400163574649	1
+129	1087	7.600001574649	3
+129	1090	7.600119574649	1
+129	1097	7.600129574649	0
+129	1102	7.600163574649	1
+129	1116	7.800001574649	3
+129	1119	7.800119574649	1
+129	1126	7.800129574649	0
+129	1131	7.800163574649	1
+129	1145	8.000001574649	3
+129	1148	8.000119574649	1
+129	1155	8.000129574649	0
+129	1160	8.000163574649	1
+129	1174	8.200001574649	3
+129	1177	8.200119574649	1
+129	1184	8.200129574649	0
+129	1189	8.200163574649	1
+129	1203	8.400001574649	3
+129	1206	8.400119574649	1
+129	1213	8.400129574649	0
+129	1218	8.400163574649	1
+129	1232	8.600001574649	3
+129	1235	8.600119574649	1
+129	1242	8.600129574649	0
+129	1247	8.600163574649	1
+129	1261	8.800001574649	3
+129	1264	8.800119574649	1
+129	1271	8.800129574649	0
+129	1276	8.800163574649	1
+129	1290	9.000001574649	3
+129	1293	9.000119574649	1
+129	1300	9.000129574649	0
+129	1305	9.000163574649	1
+129	1319	9.200001574649	3
+129	1322	9.200119574649	1
+129	1329	9.200129574649	0
+129	1334	9.200163574649	1
+129	1348	9.400001574649	3
+129	1351	9.400119574649	1
+129	1358	9.400129574649	0
+129	1363	9.400163574649	1
+129	1377	9.600001574649	3
+129	1380	9.600119574649	1
+129	1387	9.600129574649	0
+129	1392	9.600163574649	1
+129	1406	9.800001574649	3
+129	1409	9.800119574649	1
+129	1416	9.800129574649	0
+129	1421	9.800163574649	1
+130	24	0.200129574649	1
+130	25	0.200129574649	2
+130	28	0.200163574649	1
+130	29	0.200163574649	0
+130	53	0.400129574649	1
+130	54	0.400129574649	2
+130	57	0.400163574649	1
+130	58	0.400163574649	0
+130	82	0.600129574649	1
+130	83	0.600129574649	2
+130	86	0.600163574649	1
+130	87	0.600163574649	0
+130	111	0.800129574649	1
+130	112	0.800129574649	2
+130	115	0.800163574649	1
+130	116	0.800163574649	0
+130	140	1.000129574649	1
+130	141	1.000129574649	2
+130	144	1.000163574649	1
+130	145	1.000163574649	0
+130	169	1.200129574649	1
+130	170	1.200129574649	2
+130	173	1.200163574649	1
+130	174	1.200163574649	0
+130	198	1.400129574649	1
+130	199	1.400129574649	2
+130	202	1.400163574649	1
+130	203	1.400163574649	0
+130	227	1.600129574649	1
+130	228	1.600129574649	2
+130	231	1.600163574649	1
+130	232	1.600163574649	0
+130	256	1.800129574649	1
+130	257	1.800129574649	2
+130	260	1.800163574649	1
+130	261	1.800163574649	0
+130	285	2.000129574649	1
+130	286	2.000129574649	2
+130	289	2.000163574649	1
+130	290	2.000163574649	0
+130	314	2.200129574649	1
+130	315	2.200129574649	2
+130	318	2.200163574649	1
+130	319	2.200163574649	0
+130	343	2.400129574649	1
+130	344	2.400129574649	2
+130	347	2.400163574649	1
+130	348	2.400163574649	0
+130	372	2.600129574649	1
+130	373	2.600129574649	2
+130	376	2.600163574649	1
+130	377	2.600163574649	0
+130	401	2.800129574649	1
+130	402	2.800129574649	2
+130	405	2.800163574649	1
+130	406	2.800163574649	0
+130	430	3.000129574649	1
+130	431	3.000129574649	2
+130	434	3.000163574649	1
+130	435	3.000163574649	0
+130	459	3.200129574649	1
+130	460	3.200129574649	2
+130	463	3.200163574649	1
+130	464	3.200163574649	0
+130	488	3.400129574649	1
+130	489	3.400129574649	2
+130	492	3.400163574649	1
+130	493	3.400163574649	0
+130	517	3.600129574649	1
+130	518	3.600129574649	2
+130	521	3.600163574649	1
+130	522	3.600163574649	0
+130	546	3.800129574649	1
+130	547	3.800129574649	2
+130	550	3.800163574649	1
+130	551	3.800163574649	0
+130	575	4.000129574649	1
+130	576	4.000129574649	2
+130	579	4.000163574649	1
+130	580	4.000163574649	0
+130	604	4.200129574649	1
+130	605	4.200129574649	2
+130	608	4.200163574649	1
+130	609	4.200163574649	0
+130	633	4.400129574649	1
+130	634	4.400129574649	2
+130	637	4.400163574649	1
+130	638	4.400163574649	0
+130	662	4.600129574649	1
+130	663	4.600129574649	2
+130	666	4.600163574649	1
+130	667	4.600163574649	0
+130	691	4.800129574649	1
+130	692	4.800129574649	2
+130	695	4.800163574649	1
+130	696	4.800163574649	0
+130	720	5.000129574649	1
+130	721	5.000129574649	2
+130	724	5.000163574649	1
+130	725	5.000163574649	0
+130	749	5.200129574649	1
+130	750	5.200129574649	2
+130	753	5.200163574649	1
+130	754	5.200163574649	0
+130	778	5.400129574649	1
+130	779	5.400129574649	2
+130	782	5.400163574649	1
+130	783	5.400163574649	0
+130	807	5.600129574649	1
+130	808	5.600129574649	2
+130	811	5.600163574649	1
+130	812	5.600163574649	0
+130	836	5.800129574649	1
+130	837	5.800129574649	2
+130	840	5.800163574649	1
+130	841	5.800163574649	0
+130	865	6.000129574649	1
+130	866	6.000129574649	2
+130	869	6.000163574649	1
+130	870	6.000163574649	0
+130	894	6.200129574649	1
+130	895	6.200129574649	2
+130	898	6.200163574649	1
+130	899	6.200163574649	0
+130	923	6.400129574649	1
+130	924	6.400129574649	2
+130	927	6.400163574649	1
+130	928	6.400163574649	0
+130	952	6.600129574649	1
+130	953	6.600129574649	2
+130	956	6.600163574649	1
+130	957	6.600163574649	0
+130	981	6.800129574649	1
+130	982	6.800129574649	2
+130	985	6.800163574649	1
+130	986	6.800163574649	0
+130	1010	7.000129574649	1
+130	1011	7.000129574649	2
+130	1014	7.000163574649	1
+130	1015	7.000163574649	0
+130	1039	7.200129574649	1
+130	1040	7.200129574649	2
+130	1043	7.200163574649	1
+130	1044	7.200163574649	0
+130	1068	7.400129574649	1
+130	1069	7.400129574649	2
+130	1072	7.400163574649	1
+130	1073	7.400163574649	0
+130	1097	7.600129574649	1
+130	1098	7.600129574649	2
+130	1101	7.600163574649	1
+130	1102	7.600163574649	0
+130	1126	7.800129574649	1
+130	1127	7.800129574649	2
+130	1130	7.800163574649	1
+130	1131	7.800163574649	0
+130	1155	8.000129574649	1
+130	1156	8.000129574649	2
+130	1159	8.000163574649	1
+130	1160	8.000163574649	0
+130	1184	8.200129574649	1
+130	1185	8.200129574649	2
+130	1188	8.200163574649	1
+130	1189	8.200163574649	0
+130	1213	8.400129574649	1
+130	1214	8.400129574649	2
+130	1217	8.400163574649	1
+130	1218	8.400163574649	0
+130	1242	8.600129574649	1
+130	1243	8.600129574649	2
+130	1246	8.600163574649	1
+130	1247	8.600163574649	0
+130	1271	8.800129574649	1
+130	1272	8.800129574649	2
+130	1275	8.800163574649	1
+130	1276	8.800163574649	0
+130	1300	9.000129574649	1
+130	1301	9.000129574649	2
+130	1304	9.000163574649	1
+130	1305	9.000163574649	0
+130	1329	9.200129574649	1
+130	1330	9.200129574649	2
+130	1333	9.200163574649	1
+130	1334	9.200163574649	0
+130	1358	9.400129574649	1
+130	1359	9.400129574649	2
+130	1362	9.400163574649	1
+130	1363	9.400163574649	0
+130	1387	9.600129574649	1
+130	1388	9.600129574649	2
+130	1391	9.600163574649	1
+130	1392	9.600163574649	0
+130	1416	9.800129574649	1
+130	1417	9.800129574649	2
+130	1420	9.800163574649	1
+130	1421	9.800163574649	0
+131	0	0	0
+142	1435	0.1	0
+142	1435	0.2	0
+142	1435	0.3	0
+142	1435	0.4	0
+142	1435	0.5	0
+142	1435	0.6	0
+142	1435	0.7	0
+142	1435	0.8	0
+142	1435	0.9	0
+142	1435	1	0
+142	1435	1.1	0
+142	1435	1.2	0
+142	1435	1.3	0
+142	1435	1.4	0
+142	1435	1.5	0
+142	1435	1.6	0
+142	1435	1.7	0
+142	1435	1.8	0
+142	1435	1.9	0
+142	1435	2	0
+142	1435	2.1	0
+142	1435	2.2	0
+142	1435	2.3	0
+142	1435	2.4	0
+142	1435	2.5	0
+142	1435	2.6	0
+142	1435	2.7	0
+142	1435	2.8	0
+142	1435	2.9	0
+142	1435	3	0
+142	1435	3.1	0
+142	1435	3.2	0
+142	1435	3.3	0
+142	1435	3.4	0
+142	1435	3.5	0
+142	1435	3.6	0
+142	1435	3.7	0
+142	1435	3.8	0
+142	1435	3.9	0
+142	1435	4	0
+142	1435	4.1	0
+142	1435	4.2	0
+142	1435	4.3	0
+142	1435	4.4	0
+142	1435	4.5	0
+142	1435	4.6	0
+142	1435	4.7	0
+142	1435	4.8	0
+142	1435	4.9	0
+142	1435	5	0
+142	1435	5.1	0
+142	1435	5.2	0
+142	1435	5.3	0
+142	1435	5.4	0
+142	1435	5.5	0
+142	1435	5.6	0
+142	1435	5.7	0
+142	1435	5.8	0
+142	1435	5.9	0
+142	1435	6	0
+142	1435	6.1	0
+142	1435	6.2	0
+142	1435	6.3	0
+142	1435	6.4	0
+142	1435	6.5	0
+142	1435	6.6	0
+142	1435	6.7	0
+142	1435	6.8	0
+142	1435	6.9	0
+142	1435	7	0
+142	1435	7.1	0
+142	1435	7.2	0
+142	1435	7.3	0
+142	1435	7.4	0
+142	1435	7.5	0
+142	1435	7.6	0
+142	1435	7.7	0
+142	1435	7.8	0
+142	1435	7.9	0
+142	1435	8	0
+142	1435	8.1	0
+142	1435	8.2	0
+142	1435	8.3	0
+142	1435	8.4	0
+142	1435	8.5	0
+142	1435	8.6	0
+142	1435	8.7	0
+142	1435	8.8	0
+142	1435	8.9	0
+142	1435	9	0
+142	1435	9.1	0
+142	1435	9.2	0
+142	1435	9.3	0
+142	1435	9.4	0
+142	1435	9.5	0
+142	1435	9.6	0
+142	1435	9.7	0
+142	1435	9.8	0
+142	1435	9.9	0
+142	1435	10	0
+143	21	0.200119574649	208
+143	50	0.400119574649	208
+143	79	0.600119574649	208
+143	108	0.800119574649	208
+143	137	1.000119574649	208
+143	166	1.200119574649	208
+143	195	1.400119574649	208
+143	224	1.600119574649	208
+143	253	1.800119574649	208
+143	282	2.000119574649	208
+143	311	2.200119574649	208
+143	340	2.400119574649	208
+143	369	2.600119574649	208
+143	398	2.800119574649	208
+143	427	3.000119574649	208
+143	456	3.200119574649	208
+143	485	3.400119574649	208
+143	514	3.600119574649	208
+143	543	3.800119574649	208
+143	572	4.000119574649	208
+143	601	4.200119574649	208
+143	630	4.400119574649	208
+143	659	4.600119574649	208
+143	688	4.800119574649	208
+143	717	5.000119574649	208
+143	746	5.200119574649	208
+143	775	5.400119574649	208
+143	804	5.600119574649	208
+143	833	5.800119574649	208
+143	862	6.000119574649	208
+143	891	6.200119574649	208
+143	920	6.400119574649	208
+143	949	6.600119574649	208
+143	978	6.800119574649	208
+143	1007	7.000119574649	208
+143	1036	7.200119574649	208
+143	1065	7.400119574649	208
+143	1094	7.600119574649	208
+143	1123	7.800119574649	208
+143	1152	8.000119574649	208
+143	1181	8.200119574649	208
+143	1210	8.400119574649	208
+143	1239	8.600119574649	208
+143	1268	8.800119574649	208
+143	1297	9.000119574649	208
+143	1326	9.200119574649	208
+143	1355	9.400119574649	208
+143	1384	9.600119574649	208
+143	1413	9.800119574649	208
+144	0	0	0
+144	21	0.200119574649	1
+144	50	0.400119574649	2
+144	79	0.600119574649	3
+144	108	0.800119574649	4
+144	137	1.000119574649	5
+144	166	1.200119574649	6
+144	195	1.400119574649	7
+144	224	1.600119574649	8
+144	253	1.800119574649	9
+144	282	2.000119574649	10
+144	311	2.200119574649	11
+144	340	2.400119574649	12
+144	369	2.600119574649	13
+144	398	2.800119574649	14
+144	427	3.000119574649	15
+144	456	3.200119574649	16
+144	485	3.400119574649	17
+144	514	3.600119574649	18
+144	543	3.800119574649	19
+144	572	4.000119574649	20
+144	601	4.200119574649	21
+144	630	4.400119574649	22
+144	659	4.600119574649	23
+144	688	4.800119574649	24
+144	717	5.000119574649	25
+144	746	5.200119574649	26
+144	775	5.400119574649	27
+144	804	5.600119574649	28
+144	833	5.800119574649	29
+144	862	6.000119574649	30
+144	891	6.200119574649	31
+144	920	6.400119574649	32
+144	949	6.600119574649	33
+144	978	6.800119574649	34
+144	1007	7.000119574649	35
+144	1036	7.200119574649	36
+144	1065	7.400119574649	37
+144	1094	7.600119574649	38
+144	1123	7.800119574649	39
+144	1152	8.000119574649	40
+144	1181	8.200119574649	41
+144	1210	8.400119574649	42
+144	1239	8.600119574649	43
+144	1268	8.800119574649	44
+144	1297	9.000119574649	45
+144	1326	9.200119574649	46
+144	1355	9.400119574649	47
+144	1384	9.600119574649	48
+144	1413	9.800119574649	49
+145	0	0	0
+146	0	0	0
+147	22	0.200119574649	200
+147	51	0.400119574649	200
+147	80	0.600119574649	200
+147	109	0.800119574649	200
+147	138	1.000119574649	200
+147	167	1.200119574649	200
+147	196	1.400119574649	200
+147	225	1.600119574649	200
+147	254	1.800119574649	200
+147	283	2.000119574649	200
+147	312	2.200119574649	200
+147	341	2.400119574649	200
+147	370	2.600119574649	200
+147	399	2.800119574649	200
+147	428	3.000119574649	200
+147	457	3.200119574649	200
+147	486	3.400119574649	200
+147	515	3.600119574649	200
+147	544	3.800119574649	200
+147	573	4.000119574649	200
+147	602	4.200119574649	200
+147	631	4.400119574649	200
+147	660	4.600119574649	200
+147	689	4.800119574649	200
+147	718	5.000119574649	200
+147	747	5.200119574649	200
+147	776	5.400119574649	200
+147	805	5.600119574649	200
+147	834	5.800119574649	200
+147	863	6.000119574649	200
+147	892	6.200119574649	200
+147	921	6.400119574649	200
+147	950	6.600119574649	200
+147	979	6.800119574649	200
+147	1008	7.000119574649	200
+147	1037	7.200119574649	200
+147	1066	7.400119574649	200
+147	1095	7.600119574649	200
+147	1124	7.800119574649	200
+147	1153	8.000119574649	200
+147	1182	8.200119574649	200
+147	1211	8.400119574649	200
+147	1240	8.600119574649	200
+147	1269	8.800119574649	200
+147	1298	9.000119574649	200
+147	1327	9.200119574649	200
+147	1356	9.400119574649	200
+147	1385	9.600119574649	200
+147	1414	9.800119574649	200
+148	22	0.1	0
+148	22	0.2	0
+148	51	0.3	16000.000000000002
+148	51	0.4	0
+148	80	0.5	16000.000000000002
+148	80	0.6	0
+148	109	0.7	16000.000000000002
+148	109	0.8	0
+148	138	0.9	16000.000000000002
+148	138	1	0
+148	167	1.1	16000.000000000002
+148	167	1.2	0
+148	196	1.3	16000.000000000002
+148	196	1.4	0
+148	225	1.5	16000.000000000002
+148	225	1.6	0
+148	254	1.7	16000.000000000002
+148	254	1.8	0
+148	283	1.9	16000.000000000002
+148	283	2	0
+148	312	2.1	16000.000000000002
+148	312	2.2	0
+148	341	2.3	16000.000000000002
+148	341	2.4	0
+148	370	2.5	16000.000000000002
+148	370	2.6	0
+148	399	2.7	16000.000000000002
+148	399	2.8	0
+148	428	2.9	16000.000000000002
+148	428	3	0
+148	457	3.1	16000.000000000002
+148	457	3.2	0
+148	486	3.3	16000.000000000002
+148	486	3.4	0
+148	515	3.5	16000.000000000002
+148	515	3.6	0
+148	544	3.7	16000.000000000002
+148	544	3.8	0
+148	573	3.9	16000.000000000002
+148	573	4	0
+148	602	4.1	16000.000000000002
+148	602	4.2	0
+148	631	4.3	16000.000000000002
+148	631	4.4	0
+148	660	4.5	16000.000000000002
+148	660	4.6	0
+148	689	4.7	16000.000000000002
+148	689	4.8	0
+148	718	4.9	16000.000000000002
+148	718	5	0
+148	747	5.1	16000.000000000002
+148	747	5.2	0
+148	776	5.3	16000.000000000002
+148	776	5.4	0
+148	805	5.5	16000.000000000002
+148	805	5.6	0
+148	834	5.7	16000.000000000002
+148	834	5.8	0
+148	863	5.9	16000.000000000002
+148	863	6	0
+148	892	6.1	16000.000000000002
+148	892	6.2	0
+148	921	6.3	16000.000000000002
+148	921	6.4	0
+148	950	6.5	16000.000000000002
+148	950	6.6	0
+148	979	6.7	16000.000000000002
+148	979	6.8	0
+148	1008	6.9	16000.000000000002
+148	1008	7	0
+148	1037	7.1	16000.000000000002
+148	1037	7.2	0
+148	1066	7.3	16000.000000000002
+148	1066	7.4	0
+148	1095	7.5	16000.000000000002
+148	1095	7.6	0
+148	1124	7.7	16000.000000000002
+148	1124	7.8	0
+148	1153	7.9	16000.000000000002
+148	1153	8	0
+148	1182	8.1	16000.000000000002
+148	1182	8.2	0
+148	1211	8.3	16000.000000000002
+148	1211	8.4	0
+148	1240	8.5	16000.000000000002
+148	1240	8.6	0
+148	1269	8.7	16000.000000000002
+148	1269	8.8	0
+148	1298	8.9	16000.000000000002
+148	1298	9	0
+148	1327	9.1	16000.000000000002
+148	1327	9.2	0
+148	1356	9.3	16000.000000000002
+148	1356	9.4	0
+148	1385	9.5	16000.000000000002
+148	1385	9.6	0
+148	1414	9.7	16000.000000000002
+148	1414	9.8	0
+148	1435	9.9	16000.000000000002
+148	1435	10	0
+149	22	0.200119574649	0.000119574649
+149	51	0.400119574649	0.000119574649
+149	80	0.600119574649	0.000119574649
+149	109	0.800119574649	0.000119574649
+149	138	1.000119574649	0.000119574649
+149	167	1.200119574649	0.000119574649
+149	196	1.400119574649	0.000119574649
+149	225	1.600119574649	0.000119574649
+149	254	1.800119574649	0.000119574649
+149	283	2.000119574649	0.000119574649
+149	312	2.200119574649	0.000119574649
+149	341	2.400119574649	0.000119574649
+149	370	2.600119574649	0.000119574649
+149	399	2.800119574649	0.000119574649
+149	428	3.000119574649	0.000119574649
+149	457	3.200119574649	0.000119574649
+149	486	3.400119574649	0.000119574649
+149	515	3.600119574649	0.000119574649
+149	544	3.800119574649	0.000119574649
+149	573	4.000119574649	0.000119574649
+149	602	4.200119574649	0.000119574649
+149	631	4.400119574649	0.000119574649
+149	660	4.600119574649	0.000119574649
+149	689	4.800119574649	0.000119574649
+149	718	5.000119574649	0.000119574649
+149	747	5.200119574649	0.000119574649
+149	776	5.400119574649	0.000119574649
+149	805	5.600119574649	0.000119574649
+149	834	5.800119574649	0.000119574649
+149	863	6.000119574649	0.000119574649
+149	892	6.200119574649	0.000119574649
+149	921	6.400119574649	0.000119574649
+149	950	6.600119574649	0.000119574649
+149	979	6.800119574649	0.000119574649
+149	1008	7.000119574649	0.000119574649
+149	1037	7.200119574649	0.000119574649
+149	1066	7.400119574649	0.000119574649
+149	1095	7.600119574649	0.000119574649
+149	1124	7.800119574649	0.000119574649
+149	1153	8.000119574649	0.000119574649
+149	1182	8.200119574649	0.000119574649
+149	1211	8.400119574649	0.000119574649
+149	1240	8.600119574649	0.000119574649
+149	1269	8.800119574649	0.000119574649
+149	1298	9.000119574649	0.000119574649
+149	1327	9.200119574649	0.000119574649
+149	1356	9.400119574649	0.000119574649
+149	1385	9.600119574649	0.000119574649
+149	1414	9.800119574649	0.000119574649
+150	22	0.200119574649	0
+150	51	0.400119574649	1
+150	80	0.600119574649	2
+150	109	0.800119574649	3
+150	138	1.000119574649	4
+150	167	1.200119574649	5
+150	196	1.400119574649	6
+150	225	1.600119574649	7
+150	254	1.800119574649	8
+150	283	2.000119574649	9
+150	312	2.200119574649	10
+150	341	2.400119574649	11
+150	370	2.600119574649	12
+150	399	2.800119574649	13
+150	428	3.000119574649	14
+150	457	3.200119574649	15
+150	486	3.400119574649	16
+150	515	3.600119574649	17
+150	544	3.800119574649	18
+150	573	4.000119574649	19
+150	602	4.200119574649	20
+150	631	4.400119574649	21
+150	660	4.600119574649	22
+150	689	4.800119574649	23
+150	718	5.000119574649	24
+150	747	5.200119574649	25
+150	776	5.400119574649	26
+150	805	5.600119574649	27
+150	834	5.800119574649	28
+150	863	6.000119574649	29
+150	892	6.200119574649	30
+150	921	6.400119574649	31
+150	950	6.600119574649	32
+150	979	6.800119574649	33
+150	1008	7.000119574649	34
+150	1037	7.200119574649	35
+150	1066	7.400119574649	36
+150	1095	7.600119574649	37
+150	1124	7.800119574649	38
+150	1153	8.000119574649	39
+150	1182	8.200119574649	40
+150	1211	8.400119574649	41
+150	1240	8.600119574649	42
+150	1269	8.800119574649	43
+150	1298	9.000119574649	44
+150	1327	9.200119574649	45
+150	1356	9.400119574649	46
+150	1385	9.600119574649	47
+150	1414	9.800119574649	48
+
